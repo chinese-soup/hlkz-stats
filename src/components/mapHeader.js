@@ -26,9 +26,9 @@ function MapHeader({ record, mapName }) {
           <div class="twelve columns">
             <h2 class="intro-multiplier">{mapName}</h2>
             <h5 class="intro-heading">
-              Pro WR:
+              Pure WR: {formatTime(record.pure_wr)}
               <br />
-              Pure WR:
+              Pro WR: {formatTime(record.pro_wr)}
             </h5>
             <p class="intro-description"></p>
           </div>

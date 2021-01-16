@@ -26,9 +26,23 @@ function MapLeaderboard(props) {
       });
   }
 
+  const [records, setRecords] = useState([]);
+
+  useEffect(() => {
+    console.log("effect");
+    axios
+      .get("http://localhost:3000/maps/" + mapName + "/wr")
+      .then((response) => {
+        console.log("promise fulfilled");
+        setRecords(response.data.data);
+      });
+  }, []);
+
   return (
     <div className="map-leaderboard">
-      <MapHeader mapName={mapName} />
+      {records.map((record, i) => (
+        <MapHeader key={i} record={record} mapName={mapName} />
+      ))}
 
       <div class="section livefeed" id="feed">
         <div class="container">
