@@ -26,6 +26,8 @@ function Maps() {
               <thead>
                 <tr>
                   <th>Name</th>
+                  <th>Pure WR</th>
+                  <th>Pro WR</th>
                   <th>Total times</th>
                 </tr>
               </thead>

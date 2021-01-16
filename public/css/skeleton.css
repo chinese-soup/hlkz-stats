@@ -777,6 +777,7 @@ p {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
   color: #1eaedb;
+  text-decoration: none;
 }
 a:hover {
   color: #0fa0ce;
