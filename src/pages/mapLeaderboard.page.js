@@ -11,17 +11,14 @@ function MapLeaderboard(props) {
     axios
       .get("http://localhost:3000/maps/" + mapName + "/pure")
       .then((response) => {
-        console.log("promise fulfilled");
         setLeaderboards(response.data.data);
       });
   }, []);
 
   function handleCategoryChange(e) {
-    console.log(e);
     axios
       .get("http://localhost:3000/maps/" + mapName + "/" + e.target.value)
       .then((response) => {
-        console.log("promise fulfilled");
         setLeaderboards(response.data.data);
       });
   }
@@ -29,11 +26,9 @@ function MapLeaderboard(props) {
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    console.log("effect");
     axios
       .get("http://localhost:3000/maps/" + mapName + "/wr")
       .then((response) => {
-        console.log("promise fulfilled");
         setRecords(response.data.data);
       });
   }, []);

@@ -6,9 +6,7 @@ function Players() {
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
-    console.log("effect");
     axios.get("http://localhost:3000/players").then((response) => {
-      console.log("promise fulfilled");
       setPlayers(response.data.data);
     });
   }, []);
@@ -26,6 +24,8 @@ function Players() {
               <thead>
                 <tr>
                   <th>Name</th>
+                  <th>Pure WRs</th>
+                  <th>Pro WRs</th>
                   <th>Maps beaten</th>
                 </tr>
               </thead>

@@ -14,7 +14,7 @@ function PlayItNow() {
         <div className="row">
           <ul style={{ listStyle: `none`, margin: `0 auto` }}>
             <li>
-              <img src="images/flags/se.png"></img> play.sourceruns.org:27016
+              <img src="images/flags/lt.png"></img> play.sourceruns.org:27016
             </li>
             <li>
               <img src="images/flags/gb.png"></img> 212.71.238.124:27015

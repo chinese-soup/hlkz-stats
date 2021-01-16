@@ -6,9 +6,7 @@ function Maps() {
   const [maps, setMaps] = useState([]);
 
   useEffect(() => {
-    console.log("effect");
     axios.get("http://localhost:3000/maps").then((response) => {
-      console.log("promise fulfilled");
       setMaps(response.data.data);
     });
   }, []);
