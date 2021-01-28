@@ -1,15 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import PlayerList from "../components/playerList";
 
 function Players() {
   const [players, setPlayers] = useState([]);
+  const [isEmpty, setEmpty] = useState(false);
+
+  const page = 2;
+  const ref = useRef(page);
+
+  const loopPlayers = (page) => {
+    axios
+      .get("http://localhost:3000/players" + "?page=" + page)
+      .then((response) => {
+        const data = response.data.data;
+        setEmpty(data.length < 30);
+        setPlayers([...players, ...data]);
+      });
+  };
 
   useEffect(() => {
-    axios.get("http://localhost:3000/players").then((response) => {
-      setPlayers(response.data.data);
-    });
+    loopPlayers(1, page);
   }, []);
+
+  const handleShowMorePlayers = () => {
+    loopPlayers(ref.current, ref.current + page);
+    ref.current += page;
+  };
 
   return (
     <div className="section livefeed" id="feed">
@@ -37,9 +54,11 @@ function Players() {
             </table>
           </div>
         </div>
-        <a className="button button-primary" href="#browse">
-          Load more
-        </a>
+        {!isEmpty && (
+          <a className="button button-primary" onClick={handleShowMorePlayers}>
+            Load more
+          </a>
+        )}
       </div>
     </div>
   );

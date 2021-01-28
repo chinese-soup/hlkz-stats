@@ -1,15 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import MapList from "../components/mapList";
 
 function Maps() {
   const [maps, setMaps] = useState([]);
+  const [isEmpty, setEmpty] = useState(false);
+
+  const page = 2;
+  const ref = useRef(page);
+
+  const loopMaps = (page) => {
+    axios
+      .get("http://localhost:3000/maps" + "?page=" + page)
+      .then((response) => {
+        const data = response.data.data;
+        setEmpty(data.length < 30);
+        setMaps([...maps, ...data]);
+      });
+  };
 
   useEffect(() => {
-    axios.get("http://localhost:3000/maps").then((response) => {
-      setMaps(response.data.data);
-    });
+    loopMaps(1, page);
   }, []);
+
+  const handleShowMoreMaps = () => {
+    loopMaps(ref.current, ref.current + page);
+    ref.current += page;
+  };
 
   return (
     <div className="section livefeed" id="feed">
@@ -26,7 +43,7 @@ function Maps() {
                   <th>Name</th>
                   <th>Pure WR</th>
                   <th>Pro WR</th>
-                  <th>Total times</th>
+                  <th>Total players</th>
                 </tr>
               </thead>
               <tbody>
@@ -37,9 +54,11 @@ function Maps() {
             </table>
           </div>
         </div>
-        <a className="button button-primary" href="#browse">
-          Load more
-        </a>
+        {!isEmpty && (
+          <a className="button button-primary" onClick={handleShowMoreMaps}>
+            Load more
+          </a>
+        )}
       </div>
     </div>
   );

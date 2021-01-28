@@ -6,7 +6,7 @@ function PageNotFound() {
       <div className="container">
         <h3 className="section-heading">Page not found</h3>
         <p className="section-description">
-          <h6>you rly so idiot or dolbaeb!?</h6>
+          <h6>Please try another page.</h6>
         </p>
       </div>
     </div>
