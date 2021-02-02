@@ -25,7 +25,7 @@ function Maps() {
 
   const handleShowMoreMaps = () => {
     loopMaps(ref.current, ref.current + page);
-    ref.current += page;
+    ref.current += 1;
   };
 
   return (

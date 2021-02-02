@@ -68,9 +68,9 @@ function MapLeaderboard(props) {
               </table>
             </div>
           </div>
-          <a class="button button-primary" href="#browse">
+          {/* <a class="button button-primary" href="#browse">
             Load more
-          </a>
+          </a> */}
         </div>
       </div>
     </div>

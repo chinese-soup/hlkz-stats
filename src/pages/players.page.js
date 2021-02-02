@@ -25,7 +25,7 @@ function Players() {
 
   const handleShowMorePlayers = () => {
     loopPlayers(ref.current, ref.current + page);
-    ref.current += page;
+    ref.current += 1;
   };
 
   return (
