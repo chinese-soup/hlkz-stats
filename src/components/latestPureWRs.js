@@ -9,6 +9,8 @@ import {
   useHistory,
 } from "react-router-dom";
 
+import ReactTimeAgo from "react-time-ago";
+
 const Purefeed = ({ feed }) => {
   function formatTime(seconds) {
     seconds = parseFloat(seconds).toFixed(3);
@@ -33,7 +35,8 @@ const Purefeed = ({ feed }) => {
       <b>
         <Link to={`/maps/${feed.map_name}`}>{feed.map_name}</Link>
       </b>{" "}
-      in {formatTime(feed.time)}
+      in {formatTime(feed.time)} <br />
+      <ReactTimeAgo date={feed.date} locale="en-US" />
     </li>
   );
 };

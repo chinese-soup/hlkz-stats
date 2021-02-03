@@ -5,6 +5,8 @@ import Players from "./pages/players.page";
 import Maps from "./pages/maps.page";
 import PageNotFound from "./pages/404.page";
 import MapLeaderboard from "./pages/mapLeaderboard.page";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
 
 import {
   BrowserRouter as Router,
@@ -17,6 +19,8 @@ import {
 } from "react-router-dom";
 
 import axios from "axios";
+
+TimeAgo.addDefaultLocale(en);
 
 function App() {
   return (

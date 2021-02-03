@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import MapList from "../components/mapList";
+import Loader from "react-loader-spinner";
 
 function Maps() {
   const [maps, setMaps] = useState([]);

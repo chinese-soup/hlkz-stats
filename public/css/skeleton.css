@@ -1302,6 +1302,14 @@ there.
   border-bottom: 1px solid #ddd;
 }
 
+/* Time
+-------------------------------------------------- */
+time {
+  font-size: 10px;
+  color: #555;
+  white-space: nowrap;
+}
+
 /* Categories
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .play {
