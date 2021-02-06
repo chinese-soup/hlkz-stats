@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Purefeed from "../components/latestPureWRs";
-import Loader from "react-loader-spinner";
+import LoadingSpinner from "./loadingSpinner";
+import apiclient from "../apiclient";
 
 function Runfeed() {
   const [purefeed, setPurefeed] = useState([]);
-  const [isLoading, setLoading] = useState(true);
+  const [livefeed, setLivefeed] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/stats/purefeed").then((response) => {
-      setLoading(false);
+    apiclient.get("/stats/purefeed").then((response) => {
       setPurefeed(response.data.data);
     });
   }, []);
 
-  const [livefeed, setLivefeed] = useState([]);
-
   useEffect(() => {
-    axios.get("http://localhost:3000/stats/livefeed").then((response) => {
+    apiclient.get("/stats/livefeed").then((response) => {
       setLivefeed(response.data.data);
     });
   }, []);
@@ -31,18 +28,8 @@ function Runfeed() {
             <h3 className="feed-multiplier">
               <i className="fab fa-accessible-icon"></i> Latest runs
             </h3>
-            {isLoading && (
-              <center>
-                <Loader
-                  type="ThreeDots"
-                  color="#1eaedb"
-                  height={50}
-                  width={50}
-                  timeout={5000}
-                />
-              </center>
-            )}
-            {!isLoading && (
+            {livefeed.length === 0 && <LoadingSpinner />}
+            {livefeed.length > 0 && (
               <ul style={{ textAlign: `left`, width: `85%`, margin: `0 auto` }}>
                 {livefeed.map((feed, i) => (
                   <Purefeed key={i} feed={feed} />
@@ -54,18 +41,8 @@ function Runfeed() {
             <h3 className="feed-multiplier">
               <i className="fas fa-trophy"></i> Latest Pure WRs
             </h3>
-            {isLoading && (
-              <center>
-                <Loader
-                  type="ThreeDots"
-                  color="#1eaedb"
-                  height={50}
-                  width={50}
-                  timeout={5000}
-                />
-              </center>
-            )}
-            {!isLoading && (
+            {purefeed.length === 0 && <LoadingSpinner />}
+            {purefeed.length > 0 && (
               <ul style={{ textAlign: `left`, width: `85%`, margin: `0 auto` }}>
                 {purefeed.map((feed, i) => (
                   <Purefeed key={i} feed={feed} />

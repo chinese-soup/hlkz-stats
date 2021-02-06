@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import apiclient from "../apiclient";
 import PlayerList from "../components/playerList";
-import Loader from "react-loader-spinner";
+import LoadingSpinner from "../components/loadingSpinner";
 
 function Players() {
   const [players, setPlayers] = useState([]);
@@ -12,14 +12,12 @@ function Players() {
   const ref = useRef(page);
 
   const loopPlayers = (page) => {
-    axios
-      .get("http://localhost:3000/players" + "?page=" + page)
-      .then((response) => {
-        const data = response.data.data;
-        setLoading(false);
-        setEmpty(data.length < 30);
-        setPlayers([...players, ...data]);
-      });
+    apiclient.get("/players?page=" + page).then((response) => {
+      const data = response.data.data;
+      setLoading(false);
+      setEmpty(data.length < 30);
+      setPlayers([...players, ...data]);
+    });
   };
 
   useEffect(() => {
@@ -28,6 +26,7 @@ function Players() {
 
   const handleShowMorePlayers = () => {
     loopPlayers(ref.current, ref.current + page);
+    setLoading(true);
     ref.current += 1;
   };
 
@@ -40,19 +39,8 @@ function Players() {
             <h3 className="feed-multiplier">
               <i className="fas fa-walking"></i> Players
             </h3>
-
-            {isLoading && (
-              <center>
-                <Loader
-                  type="Rings"
-                  color="#1eaedb"
-                  height={100}
-                  width={100}
-                  timeout={5000}
-                />
-              </center>
-            )}
-            {!isLoading && (
+            {isLoading && players.length === 0 && <LoadingSpinner />}
+            {(!isLoading || players.length > 0) && (
               <table className="u-full-width">
                 <thead>
                   <tr>
@@ -71,11 +59,15 @@ function Players() {
             )}
           </div>
         </div>
-        {!isEmpty && (
-          <a className="button button-primary" onClick={handleShowMorePlayers}>
+        {!isEmpty && !isLoading && (
+          <div
+            className="button button-primary"
+            onClick={handleShowMorePlayers}
+          >
             Load more
-          </a>
+          </div>
         )}
+        {isLoading && players.length > 0 && <LoadingSpinner />}
       </div>
     </div>
   );

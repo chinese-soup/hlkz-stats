@@ -1,37 +1,32 @@
 import React, { useState, useEffect } from "react";
 import MapHeader from "../components/mapHeader";
-import axios from "axios";
+import apiclient from "../apiclient";
 import Leaderboard from "../components/leaderboard";
 
 function MapLeaderboard(props) {
   const mapName = props.match.params.map;
   const [times, setLeaderboards] = useState([]);
+  const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/maps/" + mapName + "/pure")
-      .then((response) => {
-        setLeaderboards(response.data.data);
-      });
-  }, []);
+    apiclient.get("/maps/" + mapName + "/pure").then((response) => {
+      setLeaderboards(response.data.data);
+    });
+  }, [mapName]);
 
   function handleCategoryChange(e) {
-    axios
-      .get("http://localhost:3000/maps/" + mapName + "/" + e.target.value)
+    apiclient
+      .get("/maps/" + mapName + "/" + e.target.value)
       .then((response) => {
         setLeaderboards(response.data.data);
       });
   }
 
-  const [records, setRecords] = useState([]);
-
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/maps/" + mapName + "/wr")
-      .then((response) => {
-        setRecords(response.data.data);
-      });
-  }, []);
+    apiclient.get("/maps/" + mapName + "/wr").then((response) => {
+      setRecords(response.data.data);
+    });
+  }, [mapName]);
 
   return (
     <div className="map-leaderboard">

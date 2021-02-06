@@ -3,7 +3,6 @@ import Runfeed from "../components/runfeed";
 import PlayItNow from "../components/playitnow";
 
 function Home() {
-  const alt = "HLKZ";
   return (
     <div className="home">
       <Intro />

@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import apiclient from "../apiclient";
 import MapList from "../components/mapList";
-import Loader from "react-loader-spinner";
+import LoadingSpinner from "../components/loadingSpinner";
 
 function Maps() {
   const [maps, setMaps] = useState([]);
   const [isEmpty, setEmpty] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const page = 2;
   const ref = useRef(page);
 
   const loopMaps = (page) => {
-    axios
-      .get("http://localhost:3000/maps" + "?page=" + page)
-      .then((response) => {
-        const data = response.data.data;
-        setEmpty(data.length < 30);
-        setMaps([...maps, ...data]);
-      });
+    apiclient.get("/maps?page=" + page).then((response) => {
+      const data = response.data.data;
+      setLoading(false);
+      setEmpty(data.length < 30);
+      setMaps([...maps, ...data]);
+    });
   };
 
   useEffect(() => {
@@ -26,6 +26,7 @@ function Maps() {
 
   const handleShowMoreMaps = () => {
     loopMaps(ref.current, ref.current + page);
+    setLoading(true);
     ref.current += 1;
   };
 
@@ -38,28 +39,32 @@ function Maps() {
             <h3 className="feed-multiplier">
               <i className="far fa-map"></i> Maps
             </h3>
-            <table className="u-full-width">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Pure WR</th>
-                  <th>Pro WR</th>
-                  <th>Total players</th>
-                </tr>
-              </thead>
-              <tbody>
-                {maps.map((map, i) => (
-                  <MapList key={i} map={map} />
-                ))}
-              </tbody>
-            </table>
+            {isLoading && maps.length === 0 && <LoadingSpinner />}
+            {(!isLoading || maps.length > 0) && (
+              <table className="u-full-width">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Pure WR</th>
+                    <th>Pro WR</th>
+                    <th>Total players</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {maps.map((map, i) => (
+                    <MapList key={i} map={map} />
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
-        {!isEmpty && (
-          <a className="button button-primary" onClick={handleShowMoreMaps}>
+        {!isEmpty && !isLoading && (
+          <div className="button button-primary" onClick={handleShowMoreMaps}>
             Load more
-          </a>
+          </div>
         )}
+        {isLoading && maps.length > 0 && <LoadingSpinner />}
       </div>
     </div>
   );

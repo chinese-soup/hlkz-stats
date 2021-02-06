@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useRouteMatch,
-  useHistory,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import ReactTimeAgo from "react-time-ago";
 
@@ -36,7 +28,7 @@ const Purefeed = ({ feed }) => {
         <Link to={`/maps/${feed.map_name}`}>{feed.map_name}</Link>
       </b>{" "}
       in {formatTime(feed.time)} <br />
-      <ReactTimeAgo date={feed.date} locale="en-US" />
+      <ReactTimeAgo date={new Date(feed.date)} locale="en-US" />
     </li>
   );
 };

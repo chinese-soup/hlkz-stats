@@ -1,24 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import Home from "./pages/home.page";
 import Players from "./pages/players.page";
+import Info from "./pages/info.page";
 import Maps from "./pages/maps.page";
 import PageNotFound from "./pages/404.page";
 import MapLeaderboard from "./pages/mapLeaderboard.page";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useRouteMatch,
-  useHistory,
-} from "react-router-dom";
-
-import axios from "axios";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 TimeAgo.addDefaultLocale(en);
 
@@ -42,6 +33,11 @@ function App() {
               <i className="fas fa-walking"></i> Players
             </Link>
           </li>
+          <li>
+            <Link to="/info">
+              <i className="fas fa-question-circle"></i> Info
+            </Link>
+          </li>
         </ul>
       </nav>
 
@@ -49,6 +45,7 @@ function App() {
         <Route exact path="/maps" component={Maps} />
         <Route exact path="/maps/:map" component={MapLeaderboard} />
         <Route exact path="/players" component={Players} />
+        <Route exact path="/info" component={Info} />
         <Route exact path="/" component={Home} />
         <Route render={() => <PageNotFound />} />
       </Switch>

@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Intro() {
-  const alt = "HLKZ";
-
   return (
     <div className="section intro" id="intro">
       <div className="container">
@@ -27,12 +25,9 @@ function Intro() {
           </div>
 
           <div className="one-third column logo">
-            <img
-              className="logo"
-              src="images/logo.png"
-              width="300px"
-              alt={alt}
-            ></img>
+            <video width="300" autoPlay loop muted>
+              <source src="images/logo.webm" type="video/webm"></source>
+            </video>
           </div>
         </div>
       </div>

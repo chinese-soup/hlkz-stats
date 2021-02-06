@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useRouteMatch,
-  useHistory,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const MapList = ({ map }) => {
   function formatTime(seconds) {
