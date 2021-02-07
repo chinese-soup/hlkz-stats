@@ -5,13 +5,13 @@ function MapHeader({ record, mapName }) {
     if (seconds === null) {
       return "-";
     } else {
-      seconds = parseFloat(seconds).toFixed(3);
+      seconds = parseFloat(seconds).toFixed(6);
       const h = Math.floor(seconds / 3600);
       const m = Math.floor((seconds % 3600) / 60);
       const s = Math.floor((seconds % 3600) % 60);
-      const ms = seconds.slice(-3);
+      const ms = seconds.slice(-6);
 
-      const pad = (num) => ("000" + num).slice(-3);
+      const pad = (num) => num.slice(0, 3);
       const padhm = (num) => ("000" + num).slice(-2);
       const result = `${padhm(m)}:${padhm(s)}.${pad(ms)}`;
 
