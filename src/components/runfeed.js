@@ -7,16 +7,36 @@ function Runfeed() {
   const [purefeed, setPurefeed] = useState([]);
   const [livefeed, setLivefeed] = useState([]);
 
-  useEffect(() => {
+  const loadPurefeed = () => {
     apiclient.get("/stats/purefeed").then((response) => {
       setPurefeed(response.data.data);
     });
-  }, []);
+  };
 
-  useEffect(() => {
+  const loadLivefeed = () => {
     apiclient.get("/stats/livefeed").then((response) => {
       setLivefeed(response.data.data);
     });
+  };
+
+  useEffect(() => {
+    loadPurefeed();
+
+    const interval = setInterval(() => {
+      loadPurefeed();
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    loadLivefeed();
+
+    const interval = setInterval(() => {
+      loadLivefeed();
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
