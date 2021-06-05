@@ -45,7 +45,7 @@ const Navbar = () => {
               <i className="fas fa-question-circle"></i> Info
             </Link>
           </li>
-          <li>
+          <li className="searchicon">
             <i className="fas fa-search"></i>{" "}
             <AutoSuggest
               suggestions={suggestions.slice(0, 10)}
