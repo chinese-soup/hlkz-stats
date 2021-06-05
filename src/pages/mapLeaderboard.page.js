@@ -7,10 +7,12 @@ function MapLeaderboard(props) {
   const mapName = props.match.params.map;
   const [times, setLeaderboards] = useState([]);
   const [records, setRecords] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     apiclient.get("/maps/" + mapName + "/pure").then((response) => {
       setLeaderboards(response.data.data);
+      setLoading(false);
     });
   }, [mapName]);
 
@@ -29,43 +31,50 @@ function MapLeaderboard(props) {
   }, [mapName]);
 
   return (
-    <div className="map-leaderboard">
-      {records.map((record, i) => (
-        <MapHeader key={i} record={record} mapName={mapName} />
-      ))}
+    <div>
+      <div className="map-leaderboard">
+        <MapHeader mapName={mapName} records={records} isLoading={isLoading} />
 
-      <div class="section livefeed" id="feed">
-        <div class="container">
-          <div class="row">
-            <div class="twelve columns">
-              <h3 class="feed-multiplier">
-                <i class="fas fa-trophy"></i> Leaderboards
-              </h3>
-              <select defaultValue="pure" onChange={handleCategoryChange}>
-                <option value="pure">Pure</option>
-                <option value="pro">Pro</option>
-              </select>
+        <div className="section livefeed" id="feed">
+          <div className="container">
+            <div className="row">
+              {records.length > 0 && (
+                <div className="twelve columns">
+                  <h3 className="feed-multiplier">
+                    <i className="fas fa-trophy"></i> Leaderboards
+                  </h3>
+                  <select defaultValue="pure" onChange={handleCategoryChange}>
+                    <option value="pure">Pure</option>
+                    <option value="pro">Pro</option>
+                  </select>
 
-              <table class="u-full-width">
-                <thead>
-                  <tr>
-                    <th>Position</th>
-                    <th>Player</th>
-                    <th>Time</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {times.map((time, i) => (
-                    <Leaderboard key={i} time={time} position={i + 1} />
-                  ))}
-                </tbody>
-              </table>
+                  {!isLoading && times.length === 0 && (
+                    <div>No times found for the selected category.</div>
+                  )}
+                  {times.length > 0 && (
+                    <table className="u-full-width">
+                      <thead>
+                        <tr>
+                          <th>Position</th>
+                          <th>Player</th>
+                          <th>Time</th>
+                          <th>Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {times.map((time, i) => (
+                          <Leaderboard key={i} time={time} position={i + 1} />
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
+              )}
             </div>
-          </div>
-          {/* <a class="button button-primary" href="#browse">
+            {/* <a className="button button-primary" href="#browse">
             Load more
           </a> */}
+          </div>
         </div>
       </div>
     </div>

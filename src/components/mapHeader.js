@@ -1,40 +1,32 @@
 import React from "react";
+import MapRecords from "./mapRecords";
+import LoadingSpinner from "../components/loadingSpinner";
 
-function MapHeader({ record, mapName }) {
-  function formatTime(seconds) {
-    if (seconds === null) {
-      return "-";
-    } else {
-      seconds = parseFloat(seconds).toFixed(6);
-      const h = Math.floor(seconds / 3600);
-      const m = Math.floor((seconds % 3600) / 60);
-      const s = Math.floor((seconds % 3600) % 60);
-      const ms = seconds.slice(-6);
-
-      const pad = (num) => num.slice(0, 3);
-      const padhm = (num) => ("000" + num).slice(-2);
-      const result = `${padhm(m)}:${padhm(s)}.${pad(ms)}`;
-
-      if (h > 0) {
-        return `${pad(h)}:${result}`;
-      }
-
-      return result;
-    }
-  }
-
+function MapHeader({ records, mapName, times, isLoading }) {
   return (
-    <div class="section intro" id="intro">
-      <div class="container">
-        <div class="row">
-          <div class="twelve columns">
-            <h2 class="intro-multiplier">{mapName}</h2>
-            <h5 class="intro-heading">
-              Pure WR: {formatTime(record.pure_wr)}
-              <br />
-              Pro WR: {formatTime(record.pro_wr)}
-            </h5>
-            <p class="intro-description"></p>
+    <div className="section intro" id="intro">
+      <div className="container">
+        <div className="row">
+          <div className="twelve columns">
+            <h2 className="intro-multiplier">{mapName}</h2>
+            <div>{isLoading && <LoadingSpinner />}</div>
+            {!isLoading && (
+              <div>
+                <h5 className="intro-heading">
+                  {records.length === 0 && (
+                    <div>Nobody has beaten this map yet :(</div>
+                  )}
+                  {records.length > 0 && (
+                    <div>
+                      {records.map((record, i) => (
+                        <MapRecords key={i} record={record} times={times} />
+                      ))}
+                    </div>
+                  )}
+                </h5>
+                <p className="intro-description"></p>
+              </div>
+            )}
           </div>
         </div>
       </div>
