@@ -9,8 +9,8 @@ function MapHeader({ records, mapName, times, isLoading, isLoadingHeader }) {
         <div className="row">
           <div className="twelve columns">
             <h2 className="intro-multiplier">{mapName}</h2>
-            <div>{(isLoading || isLoadingHeader) && <LoadingSpinner />}</div>
-            {(!isLoading || !isLoadingHeader) && (
+            <div>{isLoadingHeader && <LoadingSpinner />}</div>
+            {!isLoading && !isLoadingHeader && (
               <div>
                 <h5 className="intro-heading">
                   {records.length === 0 && (
