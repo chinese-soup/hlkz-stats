@@ -2,15 +2,15 @@ import React from "react";
 import MapRecords from "./mapRecords";
 import LoadingSpinner from "../components/loadingSpinner";
 
-function MapHeader({ records, mapName, times, isLoading }) {
+function MapHeader({ records, mapName, times, isLoading, isLoadingHeader }) {
   return (
     <div className="section intro" id="intro">
       <div className="container">
         <div className="row">
           <div className="twelve columns">
             <h2 className="intro-multiplier">{mapName}</h2>
-            <div>{isLoading && <LoadingSpinner />}</div>
-            {!isLoading && (
+            <div>{(isLoading || isLoadingHeader) && <LoadingSpinner />}</div>
+            {(!isLoading || !isLoadingHeader) && (
               <div>
                 <h5 className="intro-heading">
                   {records.length === 0 && (

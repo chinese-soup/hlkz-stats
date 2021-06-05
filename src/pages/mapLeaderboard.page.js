@@ -8,6 +8,7 @@ function MapLeaderboard(props) {
   const [times, setLeaderboards] = useState([]);
   const [records, setRecords] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [isLoadingHeader, setLoadingHeader] = useState(true);
 
   useEffect(() => {
     apiclient.get("/maps/" + mapName + "/pure").then((response) => {
@@ -27,13 +28,19 @@ function MapLeaderboard(props) {
   useEffect(() => {
     apiclient.get("/maps/" + mapName + "/wr").then((response) => {
       setRecords(response.data.data);
+      setLoadingHeader(false);
     });
   }, [mapName]);
 
   return (
     <div>
       <div className="map-leaderboard">
-        <MapHeader mapName={mapName} records={records} isLoading={isLoading} />
+        <MapHeader
+          mapName={mapName}
+          records={records}
+          isLoading={isLoading}
+          isLoadingHeader={isLoadingHeader}
+        />
 
         <div className="section livefeed" id="feed">
           <div className="container">
