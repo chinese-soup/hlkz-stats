@@ -5,7 +5,21 @@ const PlayerList = ({ player }) => {
     if (realname === null) {
       return player.last_nick;
     } else {
-      return realname;
+      var nameEnding = realname.slice(-3);
+      if (nameEnding[0] === ".") {
+        var country = nameEnding.slice(-2);
+        return (
+          <div>
+            <img
+              src={"images/flags/" + country + ".png"}
+              alt={country.toUpperCase()}
+            ></img>{" "}
+            {realname.slice(0, -3)}
+          </div>
+        );
+      } else {
+        return realname;
+      }
     }
   }
 

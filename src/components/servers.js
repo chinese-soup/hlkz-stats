@@ -17,7 +17,7 @@ const ServerList = () => {
   return (
     <ul style={{ listStyle: `none`, margin: `0 auto` }}>
       <Server country="lt" address="play.sourceruns.org:27016"></Server>
-      <Server country="gb" address="212.71.238.124:27015"></Server>
+      <Server country="uk" address="212.71.238.124:27015"></Server>
       <Server country="us" address="173.255.224.173:27015"></Server>
       <Server country="de" address="139.162.187.16:27015"></Server>
       <Server country="fi" address="95.216.211.173:27015"></Server>
