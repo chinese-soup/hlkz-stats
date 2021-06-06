@@ -14,7 +14,7 @@ const PlayerList = ({ player }) => {
               src={"images/flags/" + country + ".png"}
               alt={country.toUpperCase()}
             ></img>{" "}
-            {realname.slice(0, -3)}
+            {realname.slice(0, -4)}
           </div>
         );
       } else {
