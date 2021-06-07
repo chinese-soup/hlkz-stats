@@ -188,6 +188,7 @@ body {
   font-weight: 400;
   font-family: "Roboto", Arial, sans-serif;
   color: #222;
+  transition: background-color 0.2s ease;
 }
 
 /* Typography
@@ -851,12 +852,6 @@ there.
   font-weight: 300;
 }
 
-/* Help
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.livefeed {
-  border-bottom: 1px solid #ddd;
-}
-
 /* Time
 -------------------------------------------------- */
 time {
@@ -1071,11 +1066,64 @@ input.search:focus {
 }
 
 input.search {
-  -webkit-transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .searchicon {
   color: #777;
+}
+
+/* Dark mode toggle */
+.themeToggle {
+  position: absolute !important;
+  display: inline-block;
+  right: 5%;
+  top: 25%;
+  line-height: 2.25em;
+}
+
+/* Dark mode */
+body.dark-mode,
+body.dark-mode .react-autosuggest__suggestions-container--open {
+  background-color: #1a1919;
+  color: #b0b0b0;
+  transition: background-color 0.2s ease;
+}
+
+body.dark-mode #nav {
+  background-color: #151515;
+}
+
+body.dark-mode td,
+body.dark-mode th {
+  border-bottom: 1px solid #333;
+  transition: border-bottom 0.2 ease;
+}
+
+body.dark-mode time {
+  color: #888;
+}
+
+body.dark-mode #nav ul li a,
+body.dark-mode .searchicon,
+body.dark-mode #nav input {
+  color: #ccc;
+}
+
+body.dark-mode #nav a:hover {
+  color: #eee;
+}
+
+body.dark-mode .react-autosuggest__suggestion--highlighted {
+  background-color: #383838;
+  color: #eee;
+}
+
+body.dark-mode select {
+  background-color: #222;
+  color: #ccc;
+  border: 1px solid #484848;
+  transition: all 0.2s ease;
 }

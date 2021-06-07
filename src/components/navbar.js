@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import AutoSuggest from "react-autosuggest";
 import apiclient from "../apiclient";
+import useDarkMode from "use-dark-mode";
 
 const Navbar = () => {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [maps, setMaps] = useState([]);
+  const darkMode = useDarkMode(false);
 
   const history = useHistory();
 
@@ -75,6 +77,15 @@ const Navbar = () => {
               }}
             />
             <span className="search"></span>
+          </li>
+          <li></li>
+          <li>
+            <div className="themeToggle">
+              <Link to="#" onClick={darkMode.toggle}>
+                {darkMode.value === false && <i className="far fa-moon"></i>}
+                {darkMode.value === true && <i className="fas fa-sun"></i>}
+              </Link>
+            </div>
           </li>
         </ul>
       </nav>
