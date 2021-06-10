@@ -817,6 +817,43 @@ there.
   display: none;
 }
 
+/* Map header styling
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.mapheader {
+  position: absolute;
+  color: #fff;
+  top: 18.375em;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 80%;
+}
+
+.mapheader-root {
+  overflow: hidden;
+}
+
+.mapheader-image {
+  background-size: cover;
+  background-position: 0% 50%;
+  color: #fff;
+  margin: -5px -10px -10px -5px;
+  filter: blur(2px) brightness(75%);
+  padding: 25rem 0 24rem;
+}
+
+.mapheader-multiplier {
+  margin-bottom: 0.5rem;
+  color: #da5454;
+}
+.mapheader-heading {
+  margin-bottom: 0.3rem;
+}
+.mapheader-description {
+  opacity: 0.8;
+  font-weight: 300;
+}
+
 /* Values
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .intro {
@@ -848,6 +885,24 @@ there.
   margin-bottom: 0.3rem;
 }
 .feed-description {
+  opacity: 0.8;
+  font-weight: 300;
+}
+
+/* Values
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.leaderboard {
+  padding: 8rem 0 7rem;
+  text-align: center;
+}
+
+.leaderboard-multiplier {
+  color: #111;
+}
+.leaderboard-heading {
+  margin-bottom: 0.3rem;
+}
+.leaderboard-description {
   opacity: 0.8;
   font-weight: 300;
 }
@@ -1126,4 +1181,8 @@ body.dark-mode select {
   color: #ccc;
   border: 1px solid #484848;
   transition: all 0.2s ease;
+}
+
+body.dark-mode .leaderboard-multiplier {
+  color: #ccc;
 }

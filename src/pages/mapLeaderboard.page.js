@@ -42,14 +42,12 @@ function MapLeaderboard(props) {
           isLoadingHeader={isLoadingHeader}
         />
 
-        <div className="section livefeed" id="feed">
+        <div className="leaderboard" id="leaderboard">
           <div className="container">
             <div className="row">
               {records.length > 0 && (
                 <div className="twelve columns">
-                  <h3 className="feed-multiplier">
-                    <i className="fas fa-trophy"></i> Leaderboards
-                  </h3>
+                  <h3 className="leaderboard-multiplier">Leaderboards</h3>
                   <select defaultValue="pure" onChange={handleCategoryChange}>
                     <option value="pure">Pure</option>
                     <option value="pro">Pro</option>
