@@ -838,7 +838,7 @@ there.
   background-position: 0% 50%;
   color: #fff;
   margin: -5px -10px -10px -5px;
-  filter: blur(2px) brightness(75%);
+  filter: blur(4px) brightness(75%);
   padding: 25rem 0 24rem;
 }
 
