@@ -23,6 +23,13 @@ const Navbar = () => {
       map.name.includes(value.trim().toLowerCase())
     );
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(e.target[0].value);
+    history.push(`/maps/${e.target[0].value}`);
+  };
+
   return (
     <div>
       <nav id="nav">
@@ -49,33 +56,37 @@ const Navbar = () => {
           </li>
           <li className="searchicon">
             <i className="fas fa-search"></i>{" "}
-            <AutoSuggest
-              suggestions={suggestions.slice(0, 10)}
-              onSuggestionsClearRequested={() => setSuggestions([])}
-              onSuggestionsFetchRequested={({ value }) => {
-                setValue(value);
-                setSuggestions(getSuggestions(value));
-              }}
-              onSuggestionSelected={(_, { suggestionValue }) =>
-                history.push(`/maps/${suggestionValue}`)
-              }
-              getSuggestionValue={(suggestion) => suggestion.name}
-              renderSuggestion={(suggestion) => <span>{suggestion.name}</span>}
-              inputProps={{
-                placeholder: "Search map...",
-                className: "search",
-                value: value,
-                onChange: (_, { newValue, method }) => {
-                  setValue(newValue);
-                },
-                onFocus: () => {
-                  apiclient.get("/maplist").then((response) => {
-                    const data = response.data.data;
-                    setMaps(data);
-                  });
-                },
-              }}
-            />
+            <form onSubmit={handleSubmit}>
+              <AutoSuggest
+                suggestions={suggestions.slice(0, 10)}
+                onSuggestionsClearRequested={() => setSuggestions([])}
+                onSuggestionsFetchRequested={({ value }) => {
+                  setValue(value);
+                  setSuggestions(getSuggestions(value));
+                }}
+                onSuggestionSelected={(_, { suggestionValue }) =>
+                  history.push(`/maps/${suggestionValue}`)
+                }
+                getSuggestionValue={(suggestion) => suggestion.name}
+                renderSuggestion={(suggestion) => (
+                  <span>{suggestion.name}</span>
+                )}
+                inputProps={{
+                  placeholder: "Search map...",
+                  className: "search",
+                  value: value,
+                  onChange: (_, { newValue, method }) => {
+                    setValue(newValue);
+                  },
+                  onFocus: () => {
+                    apiclient.get("/maplist").then((response) => {
+                      const data = response.data.data;
+                      setMaps(data);
+                    });
+                  },
+                }}
+              />
+            </form>
             <span className="search"></span>
           </li>
           <li></li>
