@@ -23,6 +23,7 @@ const ServerList = () => {
       <Server country="fi" address="95.216.211.173:27015"></Server>
       <Server country="de" address="78.46.191.68:27015" desc="100aa"></Server>
       <Server country="nl" address="108.61.99.176:27016"></Server>
+      <Server country="se" address=" 31.220.5.151:27015"></Server>
     </ul>
   );
 };
