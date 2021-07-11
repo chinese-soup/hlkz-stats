@@ -8,9 +8,8 @@ const Leaderboard = ({ time, position }) => {
     const s = Math.floor((seconds % 3600) % 60);
     const ms = seconds.slice(-6);
 
-    const pad = (num) => num.slice(0, 3);
-    const padhm = (num) => ("000" + num).slice(-2);
-    const result = `${padhm(m)}:${padhm(s)}.${pad(ms)}`;
+    const pad = (num) => ("000" + num).slice(-2);
+    const result = `${pad(m)}:${pad(s)}.${ms.slice(0, 3)}`;
 
     if (h > 0) {
       return `${pad(h)}:${result}`;
