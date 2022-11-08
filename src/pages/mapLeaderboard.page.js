@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import MapHeader from "../components/mapHeader";
 import apiclient from "../apiclient";
 import Leaderboard from "../components/leaderboard";
 
-function MapLeaderboard(props) {
-  const mapName = props.match.params.map;
+function MapLeaderboard() {
+  const { mapName } = useParams();
   const [times, setLeaderboards] = useState([]);
   const [records, setRecords] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [isLoadingHeader, setLoadingHeader] = useState(true);
 
   useEffect(() => {
-    apiclient.get("/maps/" + mapName + "/pure").then((response) => {
+    apiclient.get(`/maps/${mapName}/pure`).then((response) => {
       setLeaderboards(response.data.data);
       setLoading(false);
     });
   }, [mapName]);
 
   function handleCategoryChange(e) {
-    apiclient
-      .get("/maps/" + mapName + "/" + e.target.value)
-      .then((response) => {
-        setLeaderboards(response.data.data);
-      });
+    apiclient.get(`/maps/${mapName}/${e.target.value}`).then((response) => {
+      setLeaderboards(response.data.data);
+    });
   }
 
   useEffect(() => {
-    apiclient.get("/maps/" + mapName + "/wr").then((response) => {
+    apiclient.get(`/maps/${mapName}/wr`).then((response) => {
       setRecords(response.data.data);
       setLoadingHeader(false);
     });

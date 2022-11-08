@@ -21,7 +21,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/maps" element={<Maps />} />
-        <Route path="/maps/:map" element={<MapLeaderboard />} />
+        <Route path="/maps/:mapName" element={<MapLeaderboard />} />
         <Route path="/players" element={<Players />} />
         <Route path="/info" element={<Info />} />
         <Route path="/" element={<Home />} />
