@@ -26,8 +26,13 @@ const Navbar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target[0].value);
-    history.push(`/maps/${e.target[0].value}`);
+    if (
+      getSuggestions(e.target[0].value).findIndex((object) => {
+        return object.name === e.target[0].value;
+      }) !== -1
+    ) {
+      history.push(`/maps/${e.target[0].value}`);
+    }
   };
 
   return (
