@@ -2,7 +2,7 @@ import React from "react";
 import MapRecords from "./mapRecords";
 import LoadingSpinner from "../components/loadingSpinner";
 
-function MapHeader({ records, mapName, times, isLoading, isLoadingHeader }) {
+function MapHeader({ records, mapName, times, isLoadingHeader }) {
   return (
     <div className="mapheader-root">
       <div
@@ -17,7 +17,7 @@ function MapHeader({ records, mapName, times, isLoading, isLoadingHeader }) {
             <div className="twelve columns">
               <h2 className="mapheader-multiplier">{mapName}</h2>
               <div>{isLoadingHeader && <LoadingSpinner />}</div>
-              {!isLoading && !isLoadingHeader && (
+              {!isLoadingHeader && (
                 <div>
                   <h5 className="mapheader-heading">
                     {records.length === 0 && (

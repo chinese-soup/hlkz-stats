@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import MapHeader from "../components/mapHeader";
 import apiclient from "../apiclient";
 import Leaderboard from "../components/leaderboard";
+import LoadingSpinner from "../components/loadingSpinner";
 
 function MapLeaderboard() {
   const { mapName } = useParams();
@@ -12,6 +13,7 @@ function MapLeaderboard() {
   const [isLoadingHeader, setLoadingHeader] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     apiclient.get(`/maps/${mapName}/pure`).then((response) => {
       setLeaderboards(response.data.data);
       setLoading(false);
@@ -19,12 +21,15 @@ function MapLeaderboard() {
   }, [mapName]);
 
   function handleCategoryChange(e) {
+    setLoading(true);
     apiclient.get(`/maps/${mapName}/${e.target.value}`).then((response) => {
       setLeaderboards(response.data.data);
+      setLoading(false);
     });
   }
 
   useEffect(() => {
+    setLoadingHeader(true);
     apiclient.get(`/maps/${mapName}/wr`).then((response) => {
       setRecords(response.data.data);
       setLoadingHeader(false);
@@ -37,7 +42,6 @@ function MapLeaderboard() {
         <MapHeader
           mapName={mapName}
           records={records}
-          isLoading={isLoading}
           isLoadingHeader={isLoadingHeader}
         />
 
@@ -51,11 +55,11 @@ function MapLeaderboard() {
                     <option value="pure">Pure</option>
                     <option value="pro">Pro</option>
                   </select>
-
+                  {isLoading && <LoadingSpinner />}
                   {!isLoading && times.length === 0 && (
                     <div>No times found for the selected category.</div>
                   )}
-                  {times.length > 0 && (
+                  {!isLoading && times.length > 0 && (
                     <table className="u-full-width">
                       <thead>
                         <tr>
@@ -67,7 +71,12 @@ function MapLeaderboard() {
                       </thead>
                       <tbody>
                         {times.map((time, i) => (
-                          <Leaderboard key={i} time={time} position={i + 1} />
+                          <Leaderboard
+                            key={i}
+                            time={time}
+                            position={i + 1}
+                            isLoading={isLoading}
+                          />
                         ))}
                       </tbody>
                     </table>
