@@ -30,6 +30,7 @@ function MapLeaderboard() {
 
   useEffect(() => {
     setLoadingHeader(true);
+    setRecords([]);
     apiclient.get(`/maps/${mapName}/wr`).then((response) => {
       setRecords(response.data.data);
       setLoadingHeader(false);
