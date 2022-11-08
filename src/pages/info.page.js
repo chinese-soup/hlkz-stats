@@ -6,7 +6,7 @@ function Info() {
       <div className="container">
         <div className="two-thirds column">
           <h3 className="section-heading">Half-Life Kreedz</h3>
-          <p className="section-content">
+          <div className="section-content">
             Half-Life Kreedz is a gamemode based on beating skill jump maps as
             fast as possible. This website provides statistics on the gamemode's
             players and maps from the SourceRuns Jump/Climb servers.
@@ -24,7 +24,7 @@ function Info() {
             with the help of <a href="https://bitbucket.org/Sikarii/">Sikari</a>
             , <a href="https://github.com/EchoFrost">EchoFrost</a> and{" "}
             <a href="https://steamcommunity.com/id/sfgnaz/">naz</a>. ❤️
-          </p>
+          </div>
         </div>
       </div>
     </div>

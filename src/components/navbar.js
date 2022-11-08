@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AutoSuggest from "react-autosuggest";
 import apiclient from "../apiclient";
 import useDarkMode from "use-dark-mode";
@@ -10,7 +10,7 @@ const Navbar = () => {
   const [maps, setMaps] = useState([]);
   const darkMode = useDarkMode(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const lowerCasedMaps = maps.map((map) => {
     return {
@@ -31,7 +31,7 @@ const Navbar = () => {
         return object.name === e.target[0].value;
       }) !== -1
     ) {
-      history.push(`/maps/${e.target[0].value}`);
+      navigate(`/maps/${e.target[0].value}`);
     }
   };
 
@@ -70,7 +70,7 @@ const Navbar = () => {
                   setSuggestions(getSuggestions(value));
                 }}
                 onSuggestionSelected={(_, { suggestionValue }) =>
-                  history.push(`/maps/${suggestionValue}`)
+                  navigate(`/maps/${suggestionValue}`)
                 }
                 getSuggestionValue={(suggestion) => suggestion.name}
                 renderSuggestion={(suggestion) => (
