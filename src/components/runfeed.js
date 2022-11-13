@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Purefeed from "../components/latestPureWRs";
-import LoadingSpinner from "./loadingSpinner";
 import apiclient from "../apiclient";
+import FeedLoader from "./placeholders/feedLoader";
 
 function Runfeed() {
   const [purefeed, setPurefeed] = useState([]);
@@ -48,7 +48,7 @@ function Runfeed() {
             <h3 className="feed-multiplier">
               <i className="fab fa-accessible-icon"></i> Latest runs
             </h3>
-            {livefeed.length === 0 && <LoadingSpinner />}
+            {livefeed.length === 0 && <FeedLoader />}
             {livefeed.length > 0 && (
               <ul style={{ textAlign: `left`, width: `85%`, margin: `0 auto` }}>
                 {livefeed.map((feed, i) => (
@@ -61,7 +61,7 @@ function Runfeed() {
             <h3 className="feed-multiplier">
               <i className="fas fa-trophy"></i> Latest Pure WRs
             </h3>
-            {purefeed.length === 0 && <LoadingSpinner />}
+            {purefeed.length === 0 && <FeedLoader />}
             {purefeed.length > 0 && (
               <ul style={{ textAlign: `left`, width: `85%`, margin: `0 auto` }}>
                 {purefeed.map((feed, i) => (

@@ -1030,7 +1030,7 @@ time {
 }
 
 /* Sexy ass spinner */
-svg {
+.spinner {
   width: 3.75em;
   transform-origin: center;
   animation: rotate 2s linear infinite;
@@ -1133,6 +1133,26 @@ input.search {
 
 .searchicon {
   color: #777;
+}
+
+/* Player profile */
+.roundedImg {
+  border-radius: 50%;
+  max-height: 184px;
+  height: 184px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.profile-info {
+  max-height: 184px;
+  height: 184px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* Dark mode toggle */

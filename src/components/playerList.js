@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const PlayerList = ({ player }) => {
   function playerName(realname) {
@@ -33,7 +34,14 @@ const PlayerList = ({ player }) => {
 
   return (
     <tr>
-      <td>{playerName(player.realname)}</td>
+      <td>
+        {!player.steam64 && <div>{playerName(player.realname)}</div>}
+        {player.steam64 && (
+          <Link to={`/players/${player.steam64}`}>
+            {playerName(player.realname)}
+          </Link>
+        )}
+      </td>
       <td>{record(player.pure_wrs)}</td>
       <td>{record(player.pro_wrs)}</td>
       <td>{player.beaten_maps}</td>
