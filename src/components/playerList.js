@@ -37,7 +37,7 @@ const PlayerList = ({ player }) => {
       <td>
         {!player.steam64 && <div>{playerName(player.realname)}</div>}
         {player.steam64 && (
-          <Link to={`/players/${player.steam64}`}>
+          <Link to={`/players/${player.steam64}`} state={{ player: [player] }}>
             {playerName(player.realname)}
           </Link>
         )}
