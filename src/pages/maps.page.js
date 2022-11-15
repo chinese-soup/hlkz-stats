@@ -4,30 +4,31 @@ import MapList from "../components/mapList";
 import LoadingSpinner from "../components/loadingSpinner";
 
 function Maps() {
+  const [allMaps, setAllMaps] = useState([]);
   const [maps, setMaps] = useState([]);
   const [isEmpty, setEmpty] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [index, setIndex] = useState(100);
 
-  const page = 2;
-  const ref = useRef(page);
+  const ref = useRef(index + 100);
 
-  const loopMaps = (page) => {
-    apiclient.get("/maps?page=" + page).then((response) => {
-      const data = response.data.data;
-      setLoading(false);
-      setEmpty(data.length < 30);
-      setMaps([...maps, ...data]);
-    });
+  const loopMaps = (index) => {
+    setMaps(allMaps.slice(0, index));
+    setEmpty(maps.length + 100 > allMaps.length);
   };
 
   useEffect(() => {
-    loopMaps(1, page);
+    apiclient.get("/maps").then((response) => {
+      const data = response.data.data;
+      setLoading(false);
+      setAllMaps(data);
+      setMaps(data.slice(0, index));
+    });
   }, []);
 
   const handleShowMoreMaps = () => {
-    loopMaps(ref.current, ref.current + page);
-    setLoading(true);
-    ref.current += 1;
+    loopMaps(ref.current, ref.current + index);
+    setIndex((ref.current += 100));
   };
 
   return (
@@ -61,10 +62,9 @@ function Maps() {
         </div>
         {!isEmpty && !isLoading && (
           <div className="button button-primary" onClick={handleShowMoreMaps}>
-            Load more
+            Show more
           </div>
         )}
-        {isLoading && maps.length > 0 && <LoadingSpinner />}
       </div>
     </div>
   );
