@@ -85,9 +85,6 @@ function MapLeaderboard() {
                 </div>
               )}
             </div>
-            {/* <a className="button button-primary" href="#browse">
-            Load more
-          </a> */}
           </div>
         </div>
       </div>
