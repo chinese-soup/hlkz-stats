@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Leaderboard = ({ time, position }) => {
   function formatTime(seconds) {
@@ -33,7 +34,9 @@ const Leaderboard = ({ time, position }) => {
   return (
     <tr>
       <td>{position}</td>
-      <td>{time.name}</td>
+      <td>
+        <Link to={`../players/${time.steam64}`}>{time.name}</Link>
+      </td>
       <td>{formatTime(time.time)}</td>
       <td>{formatDate(time.date)}</td>
     </tr>

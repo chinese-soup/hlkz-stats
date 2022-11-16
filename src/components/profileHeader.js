@@ -11,14 +11,13 @@ function ProfileHeader({ steamId64, player }) {
     playerInfo.length === 0 ? true : false
   );
   const [isEmpty, setEmpty] = useState(false);
-  const [country, setCountry] = useState([]);
 
   useEffect(() => {
     apiclient.get(`/players/${steamId64}/avatar`).then((response) => {
       setAvatar(response.data);
       setLoading(false);
     });
-  }, [isLoading, setLoading, steamId64]);
+  }, []);
 
   useEffect(() => {
     apiclient.get(`/players/${steamId64}`).then((response) => {
@@ -26,10 +25,9 @@ function ProfileHeader({ steamId64, player }) {
       if (isPlayerLoading) {
         setPlayerInfo(response.data.data);
       }
-      setCountry(response.data.data[0].country);
       setPlayerLoading(false);
     });
-  }, [isPlayerLoading, steamId64]);
+  }, []);
 
   function formatPlayerName(player) {
     if (player[0].realname === null) {
@@ -59,7 +57,6 @@ function ProfileHeader({ steamId64, player }) {
                 onLoad={() => setLoading(false)}
                 alt="Avatar"
               ></img>
-              <p className="profileheader-description"></p>
             </div>
 
             <div className="two-thirds column profile-info">
@@ -68,7 +65,31 @@ function ProfileHeader({ steamId64, player }) {
                 {!isPlayerLoading && <div>{formatPlayerName(playerInfo)}</div>}
               </h2>
               {!isPlayerLoading && !isEmpty && (
-                <h5 className="profileheader-heading">{country}</h5>
+                <p className="profileheader-description">
+                  {playerInfo[0].country !== null && (
+                    <p className="country">
+                      <img
+                        src={
+                          "../images/flags/" +
+                          playerInfo[0].countryCode +
+                          ".png"
+                        }
+                        alt={playerInfo[0].country}
+                      ></img>{" "}
+                      {playerInfo[0].country}
+                    </p>
+                  )}
+                  <p className="steam">
+                    <i class="fa-brands fa-steam"></i>{" "}
+                    <a
+                      href={`https://steamcommunity.com/profiles/${steamId64}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Steam profile
+                    </a>
+                  </p>
+                </p>
               )}
               {isEmpty && (
                 <h5 className="profileheader-heading">
