@@ -65,9 +65,9 @@ function ProfileHeader({ steamId64, player }) {
                 {!isPlayerLoading && <div>{formatPlayerName(playerInfo)}</div>}
               </h2>
               {!isPlayerLoading && !isEmpty && (
-                <p className="profileheader-description">
+                <div className="profileheader-description">
                   {playerInfo[0].country !== null && (
-                    <p className="country">
+                    <div className="country">
                       <img
                         src={
                           "../images/flags/" +
@@ -77,10 +77,10 @@ function ProfileHeader({ steamId64, player }) {
                         alt={playerInfo[0].country}
                       ></img>{" "}
                       {playerInfo[0].country}
-                    </p>
+                    </div>
                   )}
-                  <p className="steam">
-                    <i class="fa-brands fa-steam"></i>{" "}
+                  <div className="steam">
+                    <i className="fa-brands fa-steam"></i>{" "}
                     <a
                       href={`https://steamcommunity.com/profiles/${steamId64}`}
                       target="_blank"
@@ -88,8 +88,8 @@ function ProfileHeader({ steamId64, player }) {
                     >
                       Steam profile
                     </a>
-                  </p>
-                </p>
+                  </div>
+                </div>
               )}
               {isEmpty && (
                 <h5 className="profileheader-heading">

@@ -13,8 +13,9 @@ function Maps() {
   const ref = useRef(index + 100);
 
   const loopMaps = (index) => {
-    setMaps(allMaps.slice(0, index));
-    setEmpty(maps.length + 100 > allMaps.length);
+    const nextBatch = allMaps.slice(0, index);
+    setMaps(nextBatch);
+    setEmpty(nextBatch.length + 100 >= allMaps.length);
   };
 
   useEffect(() => {
@@ -22,7 +23,9 @@ function Maps() {
       const data = response.data.data;
       setLoading(false);
       setAllMaps(data);
-      setMaps(data.slice(0, index));
+      const firstBatch = data.slice(0, index);
+      setMaps(firstBatch);
+      setEmpty(firstBatch.length >= data.length);
     });
   }, []);
 
