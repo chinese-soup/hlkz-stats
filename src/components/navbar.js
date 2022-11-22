@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AutoSuggest from "react-autosuggest";
 import apiclient from "../apiclient";
-import useDarkMode from "use-dark-mode";
+import useDarkMode from "@fisch0920/use-dark-mode";
 
 const Navbar = () => {
   const [value, setValue] = useState("");

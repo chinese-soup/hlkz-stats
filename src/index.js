@@ -12,6 +12,7 @@ import Navbar from "./components/navbar";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PlayerProfile from "./pages/profile.page";
 
 TimeAgo.addDefaultLocale(en);
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/maps" element={<Maps />} />
         <Route path="/maps/:mapName" element={<MapLeaderboard />} />
         <Route path="/players" element={<Players />} />
+        <Route path="/players/:steamId64" element={<PlayerProfile />} />
         <Route path="/info" element={<Info />} />
         <Route path="/" element={<Home />} />
         <Route render={() => <PageNotFound />} />

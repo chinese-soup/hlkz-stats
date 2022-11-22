@@ -4,30 +4,31 @@ import PlayerList from "../components/playerList";
 import LoadingSpinner from "../components/loadingSpinner";
 
 function Players() {
+  const [allPlayers, setAllPlayers] = useState([]);
   const [players, setPlayers] = useState([]);
-  const [isEmpty, setEmpty] = useState(true);
+  const [isEmpty, setEmpty] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [index, setIndex] = useState(100);
 
-  const page = 2;
-  const ref = useRef(page);
+  const ref = useRef(index + 100);
 
-  const loopPlayers = (page) => {
-    apiclient.get("/players?page=" + page).then((response) => {
-      const data = response.data.data;
-      setLoading(false);
-      setEmpty(data.length < 30);
-      setPlayers([...players, ...data]);
-    });
+  const loopPlayers = (index) => {
+    setPlayers(allPlayers.slice(0, index));
+    setEmpty(players.length + 100 > allPlayers.length);
   };
 
   useEffect(() => {
-    loopPlayers(1, page);
+    apiclient.get("/players").then((response) => {
+      const data = response.data.data;
+      setLoading(false);
+      setAllPlayers(data);
+      setPlayers(data.slice(0, index));
+    });
   }, []);
 
   const handleShowMorePlayers = () => {
-    loopPlayers(ref.current, ref.current + page);
-    setLoading(true);
-    ref.current += 1;
+    loopPlayers(ref.current, ref.current + index);
+    setIndex((ref.current += 100));
   };
 
   return (
@@ -64,10 +65,9 @@ function Players() {
             className="button button-primary"
             onClick={handleShowMorePlayers}
           >
-            Load more
+            Show more
           </div>
         )}
-        {isLoading && players.length > 0 && <LoadingSpinner />}
       </div>
     </div>
   );
