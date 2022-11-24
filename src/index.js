@@ -27,7 +27,7 @@ function App() {
         <Route path="/players/:steamId64" element={<PlayerProfile />} />
         <Route path="/info" element={<Info />} />
         <Route path="/" element={<Home />} />
-        <Route render={() => <PageNotFound />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
   );
