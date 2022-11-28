@@ -23,6 +23,20 @@ const PersonalMaps = ({ steamId64, type }) => {
     setIndex((ref.current += 100));
   };
 
+  function handleCategoryChange(e) {
+    setLoading(true);
+    apiclient
+      .get(`/players/${steamId64}/${type}/${e.target.value}`)
+      .then((response) => {
+        const data = response.data.data[0];
+        setLoading(false);
+        setAllMaps(data);
+        const firstBatch = data.slice(0, index);
+        setMaps(firstBatch);
+        setEmpty(firstBatch.length >= data.length);
+      });
+  }
+
   useEffect(() => {
     apiclient.get(`/players/${steamId64}/${type}`).then((response) => {
       const data = response.data.data[0];
@@ -36,6 +50,18 @@ const PersonalMaps = ({ steamId64, type }) => {
 
   return (
     <div>
+      <div className="profileMapsHeader">
+        {type === "wrs" && (
+          <h3 className="leaderboard-multiplier">World records</h3>
+        )}
+        {type === "pbs" && (
+          <h3 className="leaderboard-multiplier">Personal bests</h3>
+        )}
+        <select defaultValue="pure" onChange={handleCategoryChange}>
+          <option value="pure">Pure</option>
+          <option value="pro">Pro</option>
+        </select>
+      </div>
       {isLoading && <LoadingSpinner />}
       {!isLoading && maps.length === 0 && (
         <div>No records found for this player</div>

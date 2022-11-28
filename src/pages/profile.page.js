@@ -17,11 +17,9 @@ function PlayerProfile() {
       <div className="container">
         <div className="row">
           <div className="one-half column">
-            <h3 className="leaderboard-multiplier">Personal bests</h3>
             <PersonalMaps steamId64={steamId64} type={"pbs"} />
           </div>
           <div className="one-half column">
-            <h3 className="leaderboard-multiplier">World records</h3>
             <PersonalMaps steamId64={steamId64} type={"wrs"} />
           </div>
         </div>

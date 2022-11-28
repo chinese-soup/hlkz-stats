@@ -1155,6 +1155,11 @@ input.search {
   justify-content: center;
 }
 
+.profileMapsHeader {
+  display: flex;
+  gap: 2em;
+}
+
 /* Profile header styling
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .profileheader {
