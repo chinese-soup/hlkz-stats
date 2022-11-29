@@ -43,7 +43,6 @@ const PlayerList = ({ player }) => {
         )}
       </td>
       <td>{record(player.pure_wrs)}</td>
-      <td>{record(player.pro_wrs)}</td>
       <td>{player.beaten_maps}</td>
     </tr>
   );

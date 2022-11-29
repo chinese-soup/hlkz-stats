@@ -47,7 +47,6 @@ function Players() {
                   <tr>
                     <th>Name</th>
                     <th>Pure WRs</th>
-                    <th>Pro WRs</th>
                     <th>Maps beaten</th>
                   </tr>
                 </thead>
