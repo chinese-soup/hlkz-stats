@@ -2,37 +2,32 @@ import React, { useState, useEffect, useRef } from "react";
 import apiclient from "../apiclient";
 import MapList from "../components/mapList";
 import LoadingSpinner from "../components/loadingSpinner";
+import useSortableData from "../tableSort";
 
 function Maps() {
-  const [allMaps, setAllMaps] = useState([]);
   const [maps, setMaps] = useState([]);
-  const [isEmpty, setEmpty] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [index, setIndex] = useState(100);
+  const { items, requestSort, sortConfig } = useSortableData(maps);
 
-  const ref = useRef(index + 100);
-
-  const loopMaps = (index) => {
-    const nextBatch = allMaps.slice(0, index);
-    setMaps(nextBatch);
-    setEmpty(nextBatch.length + 100 >= allMaps.length);
+  const getSortingDirectionFor = (name) => {
+    if (!sortConfig) {
+      return;
+    }
+    if (sortConfig.key === name && sortConfig.direction === "ascending") {
+      return <i className="fa-solid fa-sort-up"></i>;
+    }
+    if (sortConfig.key === name && sortConfig.direction === "descending") {
+      return <i className="fa-solid fa-sort-down"></i>;
+    }
   };
 
   useEffect(() => {
     apiclient.get("/maps").then((response) => {
       const data = response.data.data;
       setLoading(false);
-      setAllMaps(data);
-      const firstBatch = data.slice(0, index);
-      setMaps(firstBatch);
-      setEmpty(firstBatch.length >= data.length);
+      setMaps(data);
     });
   }, []);
-
-  const handleShowMoreMaps = () => {
-    loopMaps(ref.current, ref.current + index);
-    setIndex((ref.current += 100));
-  };
 
   return (
     <div className="section livefeed" id="feed">
@@ -48,14 +43,30 @@ function Maps() {
               <table className="u-full-width">
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Pure WR</th>
-                    <th>Pro WR</th>
-                    <th>Total players</th>
+                    <th>
+                      <button onClick={() => requestSort("name")}>
+                        Name {getSortingDirectionFor("name")}
+                      </button>
+                    </th>
+                    <th>
+                      <button onClick={() => requestSort("pure_wr")}>
+                        Pure WR {getSortingDirectionFor("pure_wr")}
+                      </button>
+                    </th>
+                    <th>
+                      <button onClick={() => requestSort("pro_wr")}>
+                        Pro WR {getSortingDirectionFor("pro_wr")}
+                      </button>
+                    </th>
+                    <th>
+                      <button onClick={() => requestSort("playersTotal")}>
+                        Total players {getSortingDirectionFor("playersTotal")}
+                      </button>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {maps.map((map, i) => (
+                  {items.map((map, i) => (
                     <MapList key={i} map={map} />
                   ))}
                 </tbody>
@@ -63,11 +74,11 @@ function Maps() {
             )}
           </div>
         </div>
-        {!isEmpty && !isLoading && (
+        {/* {!isEmpty && !isLoading && (
           <div className="button button-primary" onClick={handleShowMoreMaps}>
             Show more
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
