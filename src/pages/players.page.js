@@ -1,35 +1,35 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import apiclient from "../apiclient";
 import PlayerList from "../components/playerList";
 import LoadingSpinner from "../components/loadingSpinner";
+import useSortableData from "../tableSort";
+import ShowMoreButton from "../components/showMoreButton";
 
 function Players() {
-  const [allPlayers, setAllPlayers] = useState([]);
   const [players, setPlayers] = useState([]);
-  const [isEmpty, setEmpty] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const { items, requestSort, sortConfig } = useSortableData(players);
   const [index, setIndex] = useState(100);
 
-  const ref = useRef(index + 100);
-
-  const loopPlayers = (index) => {
-    setPlayers(allPlayers.slice(0, index));
-    setEmpty(players.length + 100 > allPlayers.length);
+  const getSortingDirectionFor = (name) => {
+    if (!sortConfig) {
+      return;
+    }
+    if (sortConfig.key === name && sortConfig.direction === "ascending") {
+      return <i className="fa-solid fa-sort-up"></i>;
+    }
+    if (sortConfig.key === name && sortConfig.direction === "descending") {
+      return <i className="fa-solid fa-sort-down"></i>;
+    }
   };
 
   useEffect(() => {
     apiclient.get("/players").then((response) => {
       const data = response.data.data;
       setLoading(false);
-      setAllPlayers(data);
-      setPlayers(data.slice(0, index));
+      setPlayers(data);
     });
   }, []);
-
-  const handleShowMorePlayers = () => {
-    loopPlayers(ref.current, ref.current + index);
-    setIndex((ref.current += 100));
-  };
 
   return (
     <div className="section livefeed" id="feed">
@@ -45,13 +45,23 @@ function Players() {
               <table className="u-full-width">
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Pure WRs</th>
-                    <th>Maps beaten</th>
+                    <th>
+                      <button>Name</button>
+                    </th>
+                    <th>
+                      <button onClick={() => requestSort("pure_wrs")}>
+                        Pure WRs {getSortingDirectionFor("pure_wrs")}
+                      </button>
+                    </th>
+                    <th>
+                      <button onClick={() => requestSort("beaten_maps")}>
+                        Maps beaten {getSortingDirectionFor("beaten_maps")}
+                      </button>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {players.map((player, i) => (
+                  {items.slice(0, index).map((player, i) => (
                     <PlayerList key={i} player={player} />
                   ))}
                 </tbody>
@@ -59,14 +69,11 @@ function Players() {
             )}
           </div>
         </div>
-        {!isEmpty && !isLoading && (
-          <div
-            className="button button-primary"
-            onClick={handleShowMorePlayers}
-          >
-            Show more
-          </div>
-        )}
+        <ShowMoreButton
+          totalMapCount={items.length}
+          isLoading={isLoading}
+          setIndex={setIndex}
+        />
       </div>
     </div>
   );

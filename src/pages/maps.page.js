@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import apiclient from "../apiclient";
 import MapList from "../components/mapList";
 import LoadingSpinner from "../components/loadingSpinner";
 import useSortableData from "../tableSort";
+import ShowMoreButton from "../components/showMoreButton";
 
 function Maps() {
   const [maps, setMaps] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const { items, requestSort, sortConfig } = useSortableData(maps);
+  const [index, setIndex] = useState(100);
 
   const getSortingDirectionFor = (name) => {
     if (!sortConfig) {
@@ -66,7 +68,7 @@ function Maps() {
                   </tr>
                 </thead>
                 <tbody>
-                  {items.map((map, i) => (
+                  {items.slice(0, index).map((map, i) => (
                     <MapList key={i} map={map} />
                   ))}
                 </tbody>
@@ -74,11 +76,11 @@ function Maps() {
             )}
           </div>
         </div>
-        {/* {!isEmpty && !isLoading && (
-          <div className="button button-primary" onClick={handleShowMoreMaps}>
-            Show more
-          </div>
-        )} */}
+        <ShowMoreButton
+          totalMapCount={items.length}
+          isLoading={isLoading}
+          setIndex={setIndex}
+        />
       </div>
     </div>
   );
