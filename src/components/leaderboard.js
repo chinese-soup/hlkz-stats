@@ -7,7 +7,11 @@ const Leaderboard = ({ time, position }) => {
     <tr>
       <td>{position}</td>
       <td>
-        <Link to={`../players/${time.steam64}`}>{time.name}</Link>
+        {time.steam64 !== null ? (
+          <Link to={`../players/${time.steam64}`}>{time.name}</Link>
+        ) : (
+          <div>{time.name}</div>
+        )}
       </td>
       <td>{formatTime(time.time)}</td>
       <td>{formatUnixDate(time.date)}</td>

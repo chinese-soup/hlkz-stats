@@ -1200,6 +1200,25 @@ input.search {
   flex-direction: row;
 }
 
+/* Sortable table buttons */
+thead button {
+  color: #222;
+  border: 0;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: inherit;
+  padding: 0em;
+  margin: 0px;
+}
+
+thead button:hover {
+  color: #000;
+}
+
+thead button:focus {
+  color: #000;
+}
+
 /* Dark mode toggle */
 .themeToggle {
   position: absolute !important;
@@ -1255,4 +1274,22 @@ body.dark-mode select {
 
 body.dark-mode .leaderboard-multiplier {
   color: #ccc;
+}
+
+body.dark-mode thead button {
+  color: #ccc;
+  border: 0;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: inherit;
+  padding: 0em;
+  margin: 0px;
+}
+
+body.dark-mode thead button:hover {
+  color: #fff;
+}
+
+body.dark-mode thead button:focus {
+  color: #fff;
 }
