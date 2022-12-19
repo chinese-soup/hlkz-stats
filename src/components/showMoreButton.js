@@ -1,7 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 
-const ShowMoreButton = ({ totalMapCount, isLoading, setIndex }) => {
-  const [isLoaded, setLoaded] = useState(false);
+const ShowMoreButton = ({
+  totalMapCount,
+  isLoading,
+  setIndex,
+  isLoaded,
+  setLoaded,
+}) => {
   const ref = useRef(100);
 
   const handleShowMore = () => {

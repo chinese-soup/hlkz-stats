@@ -1,27 +1,16 @@
 import PlayerMaps from "../playerMaps";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import apiclient from "../../apiclient";
 import LoadingSpinner from "../loadingSpinner";
+import useSortableData from "../../tableSort";
+import ShowMoreButton from "../showMoreButton";
 
 const PersonalMaps = ({ steamId64, type }) => {
-  const [allMaps, setAllMaps] = useState([]);
   const [maps, setMaps] = useState([]);
-  const [isEmpty, setEmpty] = useState(true);
+  const { items, requestSort, sortConfig } = useSortableData(maps);
   const [isLoading, setLoading] = useState(true);
   const [index, setIndex] = useState(100);
-
-  const ref = useRef(index + 100);
-
-  const loopMaps = (index) => {
-    const newBatch = allMaps;
-    setMaps(newBatch);
-    setEmpty(newBatch.length >= allMaps.length);
-  };
-
-  const handleShowAllMaps = () => {
-    loopMaps(ref.current, ref.current + index);
-    setIndex((ref.current += 100));
-  };
+  const [isLoaded, setLoaded] = useState(false);
 
   function handleCategoryChange(e) {
     setLoading(true);
@@ -30,21 +19,29 @@ const PersonalMaps = ({ steamId64, type }) => {
       .then((response) => {
         const data = response.data.data[0];
         setLoading(false);
-        setAllMaps(data);
-        const firstBatch = data.slice(0, index);
-        setMaps(firstBatch);
-        setEmpty(firstBatch.length >= data.length);
+        setMaps(data);
+        setLoaded(index > data.length);
       });
   }
+
+  const getSortingDirectionFor = (name) => {
+    if (!sortConfig) {
+      return;
+    }
+    if (sortConfig.key === name && sortConfig.direction === "ascending") {
+      return <i className="fa-solid fa-sort-up"></i>;
+    }
+    if (sortConfig.key === name && sortConfig.direction === "descending") {
+      return <i className="fa-solid fa-sort-down"></i>;
+    }
+  };
 
   useEffect(() => {
     apiclient.get(`/players/${steamId64}/${type}`).then((response) => {
       const data = response.data.data[0];
       setLoading(false);
-      setAllMaps(data);
-      const firstBatch = data.slice(0, index);
-      setMaps(firstBatch);
-      setEmpty(firstBatch.length >= data.length);
+      setMaps(data);
+      setLoaded(index > data.length);
     });
   }, []);
 
@@ -70,25 +67,39 @@ const PersonalMaps = ({ steamId64, type }) => {
         <table className="u-full-width">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Time</th>
-              <th>Date</th>
+              <th>
+                <button onClick={() => requestSort("name")}>
+                  Name {getSortingDirectionFor("name")}
+                </button>
+              </th>
+              <th>
+                <button onClick={() => requestSort("bestTime")}>
+                  Time {getSortingDirectionFor("bestTime")}
+                </button>
+              </th>
+              <th>
+                <button onClick={() => requestSort("date")}>
+                  Date {getSortingDirectionFor("date")}
+                </button>
+              </th>
             </tr>
           </thead>
           <tbody>
-            {maps.map((map, i) => (
+            {items.slice(0, index).map((map, i) => (
               <PlayerMaps key={i} map={map} />
             ))}
           </tbody>
         </table>
       )}
-      {!isEmpty && !isLoading && (
-        <center>
-          <div className="button button-primary" onClick={handleShowAllMaps}>
-            Show all
-          </div>
-        </center>
-      )}
+      <center>
+        <ShowMoreButton
+          totalMapCount={items.length}
+          isLoading={isLoading}
+          setIndex={setIndex}
+          isLoaded={isLoaded}
+          setLoaded={setLoaded}
+        />
+      </center>
     </div>
   );
 };

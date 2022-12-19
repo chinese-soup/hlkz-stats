@@ -7,11 +7,20 @@ const useSortableData = (items, config = null) => {
     let sortableItems = [...items];
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
+        // Do not change null positions
         if (a[sortConfig.key] === null) {
           return sortConfig.direction === "ascending" ? -1 : 1;
         }
         if (b[sortConfig.key] === null) {
           return sortConfig.direction === "ascending" ? 1 : -1;
+        }
+        if (sortConfig.key === "date") {
+          if (Date.parse(a[sortConfig.key]) < Date.parse(b[sortConfig.key])) {
+            return sortConfig.direction === "ascending" ? -1 : 1;
+          }
+          if (Date.parse(a[sortConfig.key]) > Date.parse(b[sortConfig.key])) {
+            return sortConfig.direction === "ascending" ? 1 : -1;
+          }
         }
         if (!isNaN(parseFloat(a[sortConfig.key]))) {
           // Check if we are sorting numbers
