@@ -24,7 +24,7 @@ function Runfeed() {
 
     const interval = setInterval(() => {
       loadPurefeed();
-    }, 30000);
+    }, 60000);
 
     return () => clearInterval(interval);
   }, []);
@@ -34,7 +34,7 @@ function Runfeed() {
 
     const interval = setInterval(() => {
       loadLivefeed();
-    }, 5000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, []);
