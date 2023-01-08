@@ -439,7 +439,6 @@ select:focus {
 }
 label,
 legend {
-  display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
 }
@@ -1219,6 +1218,32 @@ thead button:focus {
   color: #000;
 }
 
+.filter {
+  display: flex;
+  text-align: left;
+  color: #222;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.35em 0.7em 0.35em 0.7em;
+  border-radius: 5px;
+  width: fit-content;
+  transition-duration: 0.4s;
+}
+
+.filter:hover {
+  background-color: #efefef;
+  transition-duration: 0.4s;
+}
+
+.filter input[type="checkbox"] {
+  margin-right: 0.5em;
+  margin-bottom: 0;
+}
+
+.filter label {
+  margin-bottom: 0;
+}
+
 /* Dark mode toggle */
 .themeToggle {
   position: absolute !important;
@@ -1292,4 +1317,12 @@ body.dark-mode thead button:hover {
 
 body.dark-mode thead button:focus {
   color: #fff;
+}
+
+body.dark-mode .filter {
+  color: #ccc;
+}
+
+body.dark-mode .filter:hover {
+  background-color: #222;
 }

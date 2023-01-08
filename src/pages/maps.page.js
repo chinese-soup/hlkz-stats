@@ -7,9 +7,24 @@ import ShowMoreButton from "../components/showMoreButton";
 
 function Maps() {
   const [maps, setMaps] = useState([]);
+  const [filteredMaps, setFilteredMaps] = useState(maps || []);
   const [isLoading, setLoading] = useState(true);
-  const { items, requestSort, sortConfig } = useSortableData(maps);
+  const { items, requestSort, sortConfig } = useSortableData(filteredMaps);
   const [index, setIndex] = useState(100);
+
+  const handleChange = (event) => {
+    if (event.target.checked) {
+      const data = maps
+        .filter((data) => data.playersTotal > 0)
+        .map((filteredName) => {
+          return filteredName;
+        });
+      setFilteredMaps(data);
+    } else {
+      const data2 = maps;
+      setFilteredMaps(data2);
+    }
+  };
 
   const getSortingDirectionFor = (name) => {
     if (!sortConfig) {
@@ -28,6 +43,7 @@ function Maps() {
       const data = response.data.data;
       setLoading(false);
       setMaps(data);
+      setFilteredMaps(data);
     });
   }, []);
 
@@ -42,37 +58,52 @@ function Maps() {
             </h3>
             {isLoading && maps.length === 0 && <LoadingSpinner />}
             {(!isLoading || maps.length > 0) && (
-              <table className="u-full-width">
-                <thead>
-                  <tr>
-                    <th>
-                      <button onClick={() => requestSort("name")}>
-                        Name {getSortingDirectionFor("name")}
-                      </button>
-                    </th>
-                    <th>
-                      <button onClick={() => requestSort("pure_wr")}>
-                        Pure WR {getSortingDirectionFor("pure_wr")}
-                      </button>
-                    </th>
-                    <th>
-                      <button onClick={() => requestSort("pro_wr")}>
-                        Pro WR {getSortingDirectionFor("pro_wr")}
-                      </button>
-                    </th>
-                    <th>
-                      <button onClick={() => requestSort("playersTotal")}>
-                        Total players {getSortingDirectionFor("playersTotal")}
-                      </button>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {items.slice(0, index).map((map, i) => (
-                    <MapList key={i} map={map} />
-                  ))}
-                </tbody>
-              </table>
+              <div>
+                <div className="filter">
+                  <input
+                    id="playersTotal-filter"
+                    type="checkbox"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="playersTotal-filter">
+                    Hide maps without players
+                  </label>
+                </div>
+                <div>
+                  <table className="u-full-width">
+                    <thead>
+                      <tr>
+                        <th>
+                          <button onClick={() => requestSort("name")}>
+                            Name {getSortingDirectionFor("name")}
+                          </button>
+                        </th>
+                        <th>
+                          <button onClick={() => requestSort("pure_wr")}>
+                            Pure WR {getSortingDirectionFor("pure_wr")}
+                          </button>
+                        </th>
+                        <th>
+                          <button onClick={() => requestSort("pro_wr")}>
+                            Pro WR {getSortingDirectionFor("pro_wr")}
+                          </button>
+                        </th>
+                        <th>
+                          <button onClick={() => requestSort("playersTotal")}>
+                            Total players{" "}
+                            {getSortingDirectionFor("playersTotal")}
+                          </button>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {items.slice(0, index).map((map, i) => (
+                        <MapList key={i} map={map} />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             )}
           </div>
         </div>
