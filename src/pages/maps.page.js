@@ -43,13 +43,13 @@ function Maps() {
             <h3 className="feed-multiplier">
               <i className="far fa-map"></i> Maps
             </h3>
-            <HideEmpty maps={maps} setFilteredMaps={setFilteredMaps} />
             {!isLoading && filteredMaps.length === 0 && (
               <div>No results matching your criteria</div>
             )}
             {isLoading && maps.length === 0 && <LoadingSpinner />}
             {!isLoading && filteredMaps.length > 0 && (
               <div>
+                <HideEmpty maps={maps} setFilteredMaps={setFilteredMaps} />
                 <div>
                   <table className="u-full-width">
                     <thead>
