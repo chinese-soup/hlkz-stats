@@ -4,6 +4,7 @@ import MapList from "../components/mapList";
 import LoadingSpinner from "../components/loadingSpinner";
 import useSortableData from "../tableSort";
 import ShowMoreButton from "../components/showMoreButton";
+import HideEmpty from "../components/filters/hideEmptyMaps";
 
 function Maps() {
   const [maps, setMaps] = useState([]);
@@ -11,20 +12,6 @@ function Maps() {
   const [isLoading, setLoading] = useState(true);
   const { items, requestSort, sortConfig } = useSortableData(filteredMaps);
   const [index, setIndex] = useState(100);
-
-  const handleChange = (event) => {
-    if (event.target.checked) {
-      const data = maps
-        .filter((data) => data.playersTotal > 0)
-        .map((filteredName) => {
-          return filteredName;
-        });
-      setFilteredMaps(data);
-    } else {
-      const data2 = maps;
-      setFilteredMaps(data2);
-    }
-  };
 
   const getSortingDirectionFor = (name) => {
     if (!sortConfig) {
@@ -56,19 +43,13 @@ function Maps() {
             <h3 className="feed-multiplier">
               <i className="far fa-map"></i> Maps
             </h3>
+            <HideEmpty maps={maps} setFilteredMaps={setFilteredMaps} />
+            {!isLoading && filteredMaps.length === 0 && (
+              <div>No results matching your criteria</div>
+            )}
             {isLoading && maps.length === 0 && <LoadingSpinner />}
-            {(!isLoading || maps.length > 0) && (
+            {!isLoading && filteredMaps.length > 0 && (
               <div>
-                <div className="filter">
-                  <input
-                    id="playersTotal-filter"
-                    type="checkbox"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="playersTotal-filter">
-                    Hide maps without players
-                  </label>
-                </div>
                 <div>
                   <table className="u-full-width">
                     <thead>

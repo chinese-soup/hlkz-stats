@@ -1,14 +1,8 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
-const ShowMoreButton = ({
-  totalMapCount,
-  isLoading,
-  setIndex,
-  isLoaded,
-  setLoaded,
-}) => {
+const ShowMoreButton = ({ totalMapCount, isLoading, setIndex }) => {
   const ref = useRef(100);
-
+  const [isLoaded, setLoaded] = useState(false);
   const handleShowMore = () => {
     setIndex((ref.current += 100));
     if (ref.current > totalMapCount) {
