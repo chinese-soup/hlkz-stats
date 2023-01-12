@@ -5,6 +5,8 @@ import LoadingSpinner from "../components/loadingSpinner";
 import useSortableData from "../tableSort";
 import ShowMoreButton from "../components/showMoreButton";
 import HideEmpty from "../components/filters/hideEmptyMaps";
+import MapMinPureTime from "../components/filters/mapMinPureTime";
+import MapMaxPureTime from "../components/filters/mapMaxPureTime";
 
 function Maps() {
   const [maps, setMaps] = useState([]);
@@ -12,6 +14,30 @@ function Maps() {
   const [isLoading, setLoading] = useState(true);
   const { items, requestSort, sortConfig } = useSortableData(filteredMaps);
   const [index, setIndex] = useState(100);
+  const [totalMapCount, setTotalMapCount] = useState(items.length);
+
+  const [filterCriteria, setFilterCriteria] = useState({
+    playersTotal: -Infinity,
+    minPureValue: -Infinity,
+    maxPureValue: Infinity,
+  });
+
+  const filterFunctions = {
+    playersTotal: (data, criteria) => data.playersTotal > criteria,
+    minPureValue: (data, criteria) => Number(data.pure_wr) > criteria,
+    maxPureValue: (data, criteria) => Number(data.pure_wr) < criteria,
+  };
+
+  const applyFilter = () => {
+    let data = maps;
+    Object.entries(filterCriteria).forEach(([key, criteria]) => {
+      if (criteria !== undefined) {
+        data = data.filter((data) => filterFunctions[key](data, criteria));
+      }
+    });
+    setFilteredMaps(data);
+    console.log(filterCriteria); // debug
+  };
 
   const getSortingDirectionFor = (name) => {
     if (!sortConfig) {
@@ -34,6 +60,16 @@ function Maps() {
     });
   }, []);
 
+  useEffect(() => {
+    // Listen to changes in filterCriteria, then run applyFilter()
+    applyFilter();
+  }, [filterCriteria]);
+
+  useEffect(() => {
+    // Listen to changes in items array, then update total map count
+    setTotalMapCount(items.length);
+  }, [items]);
+
   return (
     <div className="section livefeed" id="feed">
       <div className="container">
@@ -43,13 +79,31 @@ function Maps() {
             <h3 className="feed-multiplier">
               <i className="far fa-map"></i> Maps
             </h3>
+            {isLoading && maps.length === 0 && <LoadingSpinner />}
+            {!isLoading && (
+              <div>
+                <HideEmpty
+                  setFilterCriteria={setFilterCriteria}
+                  defaultValue={-Infinity}
+                  applyFilter={applyFilter}
+                />
+                <MapMinPureTime
+                  setFilterCriteria={setFilterCriteria}
+                  defaultValue={-Infinity}
+                  applyFilter={applyFilter}
+                />
+                <MapMaxPureTime
+                  setFilterCriteria={setFilterCriteria}
+                  defaultValue={Infinity}
+                  applyFilter={applyFilter}
+                />
+              </div>
+            )}
             {!isLoading && filteredMaps.length === 0 && (
               <div>No results matching your criteria</div>
             )}
-            {isLoading && maps.length === 0 && <LoadingSpinner />}
             {!isLoading && filteredMaps.length > 0 && (
               <div>
-                <HideEmpty maps={maps} setFilteredMaps={setFilteredMaps} />
                 <div>
                   <table className="u-full-width">
                     <thead>
@@ -89,7 +143,7 @@ function Maps() {
           </div>
         </div>
         <ShowMoreButton
-          totalMapCount={items.length}
+          totalMapCount={totalMapCount}
           isLoading={isLoading}
           setIndex={setIndex}
         />

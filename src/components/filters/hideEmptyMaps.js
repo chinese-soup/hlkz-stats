@@ -1,18 +1,14 @@
 import React from "react";
 
-const HideEmpty = ({ maps, setFilteredMaps }) => {
+const HideEmpty = ({ setFilterCriteria, defaultValue, applyFilter }) => {
   const handleChange = (event) => {
-    if (event.target.checked) {
-      const data = maps
-        .filter((data) => data.playersTotal > 0)
-        .map((filteredName) => {
-          return filteredName;
-        });
-      setFilteredMaps(data);
-    } else {
-      const data2 = maps;
-      setFilteredMaps(data2);
-    }
+    const newValue = event.target.checked ? 0 : defaultValue;
+    setFilterCriteria((prevCriteria) => {
+      return {
+        ...prevCriteria,
+        playersTotal: newValue,
+      };
+    });
   };
 
   return (
