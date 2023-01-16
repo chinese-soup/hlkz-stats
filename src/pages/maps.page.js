@@ -81,7 +81,7 @@ function Maps() {
             </h3>
             {isLoading && maps.length === 0 && <LoadingSpinner />}
             {!isLoading && (
-              <div>
+              <div className="filterToggles">
                 <HideEmpty
                   setFilterCriteria={setFilterCriteria}
                   defaultValue={-Infinity}

@@ -1,6 +1,6 @@
 import React from "react";
 
-const HideEmpty = ({ setFilterCriteria, defaultValue, applyFilter }) => {
+const HideEmpty = ({ setFilterCriteria, defaultValue }) => {
   const handleChange = (event) => {
     const newValue = event.target.checked ? 0 : defaultValue;
     setFilterCriteria((prevCriteria) => {

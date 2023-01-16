@@ -1115,6 +1115,9 @@ input.search {
   border: 1px solid transparent !important;
   border-bottom-color: none;
   margin-bottom: 0 !important;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 input.search:focus {
@@ -1122,12 +1125,6 @@ input.search:focus {
   border-bottom-color: #da5454 !important;
   border-radius: 0;
   transition: border 0.5s ease;
-}
-
-input.search {
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
 }
 
 .searchicon {
@@ -1219,7 +1216,6 @@ thead button:focus {
 }
 
 .filter {
-  display: flex;
   text-align: left;
   color: #222;
   font-weight: 700;
@@ -1242,6 +1238,31 @@ thead button:focus {
 
 .filter label {
   margin-bottom: 0;
+}
+
+.filter.boundary input {
+  width: 200px;
+  position: relative;
+  background-color: transparent !important;
+  border: 1px solid transparent !important;
+  border-bottom-color: none;
+  margin-bottom: 0 !important;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.filter.boundary input:focus {
+  outline: none;
+  border-bottom-color: #da5454 !important;
+  border-radius: 0;
+  transition: border 0.5s ease;
+  caret-color: #222;
+}
+
+.filterToggles {
+  display: flex;
+  flex-direction: row;
 }
 
 /* Dark mode toggle */
@@ -1320,6 +1341,15 @@ body.dark-mode thead button:focus {
 }
 
 body.dark-mode .filter {
+  color: #ccc;
+}
+
+body.dark-mode .filter.boundary input {
+  color: #ccc;
+}
+
+body.dark-mode .filter.boundary input:focus {
+  caret-color: #ccc;
   color: #ccc;
 }
 
