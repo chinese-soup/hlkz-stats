@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import apiclient from "../apiclient";
 import PlayerList from "../components/playerList";
 import LoadingSpinner from "../components/loadingSpinner";
-import useSortableData from "../tableSort";
+import useSortableData from "../utils/tableSort";
 import ShowMoreButton from "../components/showMoreButton";
 
 function Players() {

@@ -1,5 +1,5 @@
 import React from "react";
-import { reverseFormatTime } from "../../timeAndDate";
+import { reverseFormatTime } from "../../utils/timeAndDate";
 
 const MapMaxPureTime = ({ setFilterCriteria, defaultValue }) => {
   const handleChange = (event) => {

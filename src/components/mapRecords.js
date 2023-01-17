@@ -1,5 +1,5 @@
 import React from "react";
-import { formatTime } from "../timeAndDate";
+import { formatTime } from "../utils/timeAndDate";
 
 function MapRecords({ record, times }) {
   return (

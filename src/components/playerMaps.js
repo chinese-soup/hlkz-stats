@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { formatDate, formatTime } from "../timeAndDate";
+import { formatDate, formatTime } from "../utils/timeAndDate";
 
 const PlayerMaps = ({ map }) => {
   return (

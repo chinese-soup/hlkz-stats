@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { formatUnixDate, formatTime } from "../timeAndDate";
+import { formatUnixDate, formatTime } from "../utils/timeAndDate";
 
 const Leaderboard = ({ time, position }) => {
   return (

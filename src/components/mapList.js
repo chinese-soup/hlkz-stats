@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { formatTime } from "../timeAndDate";
+import { formatTime } from "../utils/timeAndDate";
 
 const MapList = ({ map }) => {
   return (

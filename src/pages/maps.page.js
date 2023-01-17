@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import apiclient from "../apiclient";
 import MapList from "../components/mapList";
 import LoadingSpinner from "../components/loadingSpinner";
-import useSortableData from "../tableSort";
+import useSortableData from "../utils/tableSort";
 import ShowMoreButton from "../components/showMoreButton";
 import HideEmpty from "../components/filters/hideEmptyMaps";
 import MapMinPureTime from "../components/filters/mapMinPureTime";
 import MapMaxPureTime from "../components/filters/mapMaxPureTime";
+import { filterArray } from "../utils/filter";
 
 function Maps() {
   const [maps, setMaps] = useState([]);
@@ -15,7 +16,6 @@ function Maps() {
   const { items, requestSort, sortConfig } = useSortableData(filteredMaps);
   const [index, setIndex] = useState(100);
   const [totalMapCount, setTotalMapCount] = useState(items.length);
-
   const [filterCriteria, setFilterCriteria] = useState({
     playersTotal: -Infinity,
     minPureValue: -Infinity,
@@ -26,17 +26,6 @@ function Maps() {
     playersTotal: (data, criteria) => data.playersTotal > criteria,
     minPureValue: (data, criteria) => Number(data.pure_wr) > criteria,
     maxPureValue: (data, criteria) => Number(data.pure_wr) < criteria,
-  };
-
-  const applyFilter = () => {
-    let data = maps;
-    Object.entries(filterCriteria).forEach(([key, criteria]) => {
-      if (criteria !== undefined) {
-        data = data.filter((data) => filterFunctions[key](data, criteria));
-      }
-    });
-    setFilteredMaps(data);
-    console.log(filterCriteria); // debug
   };
 
   const getSortingDirectionFor = (name) => {
@@ -61,8 +50,9 @@ function Maps() {
   }, []);
 
   useEffect(() => {
-    // Listen to changes in filterCriteria, then run applyFilter()
-    applyFilter();
+    // Listen to changes in filterCriteria, then update filtered maps
+    setFilteredMaps(filterArray(maps, filterCriteria, filterFunctions));
+    console.log(filterCriteria); // debug
   }, [filterCriteria]);
 
   useEffect(() => {
@@ -85,17 +75,14 @@ function Maps() {
                 <HideEmpty
                   setFilterCriteria={setFilterCriteria}
                   defaultValue={-Infinity}
-                  applyFilter={applyFilter}
                 />
                 <MapMinPureTime
                   setFilterCriteria={setFilterCriteria}
                   defaultValue={-Infinity}
-                  applyFilter={applyFilter}
                 />
                 <MapMaxPureTime
                   setFilterCriteria={setFilterCriteria}
                   defaultValue={Infinity}
-                  applyFilter={applyFilter}
                 />
               </div>
             )}

@@ -2,7 +2,7 @@ import PlayerMaps from "../playerMaps";
 import React, { useState, useEffect } from "react";
 import apiclient from "../../apiclient";
 import LoadingSpinner from "../loadingSpinner";
-import useSortableData from "../../tableSort";
+import useSortableData from "../../utils/tableSort";
 import ShowMoreButton from "../showMoreButton";
 
 const PersonalMaps = ({ steamId64, type }) => {

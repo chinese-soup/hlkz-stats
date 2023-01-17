@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import ReactTimeAgo from "react-time-ago";
-import { formatTime } from "../timeAndDate";
+import { formatTime } from "../utils/timeAndDate";
 
 const Purefeed = ({ feed }) => {
   return (
