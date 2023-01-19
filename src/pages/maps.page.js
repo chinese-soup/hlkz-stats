@@ -4,10 +4,8 @@ import MapList from "../components/mapList";
 import LoadingSpinner from "../components/loadingSpinner";
 import useSortableData from "../utils/tableSort";
 import ShowMoreButton from "../components/showMoreButton";
-import HideEmpty from "../components/filters/hideEmptyMaps";
-import MapMinPureTime from "../components/filters/mapMinPureTime";
-import MapMaxPureTime from "../components/filters/mapMaxPureTime";
-import { filterArray } from "../utils/filter";
+import BoundaryFilter from "../components/filters/boundaryFilter";
+import filterArray from "../utils/filter";
 
 function Maps() {
   const [maps, setMaps] = useState([]);
@@ -16,16 +14,22 @@ function Maps() {
   const { items, requestSort, sortConfig } = useSortableData(filteredMaps);
   const [index, setIndex] = useState(100);
   const [totalMapCount, setTotalMapCount] = useState(items.length);
-  const [filterCriteria, setFilterCriteria] = useState({
-    playersTotal: -Infinity,
-    minPureValue: -Infinity,
-    maxPureValue: Infinity,
-  });
+  const [filterCriteria, setFilterCriteria] = useState({});
 
   const filterFunctions = {
-    playersTotal: (data, criteria) => data.playersTotal > criteria,
-    minPureValue: (data, criteria) => Number(data.pure_wr) > criteria,
-    maxPureValue: (data, criteria) => Number(data.pure_wr) < criteria,
+    // TODO: Move to respective filter component (i.e. boundary filter)
+    // and access objects based on criteriaKey parameter instead of having hardcoded keys
+    playersTotal: {
+      "greater than": (data, criteria) => data.playersTotal > criteria,
+      "less than": (data, criteria) => data.playersTotal < criteria,
+      "equal to": (data, criteria) => data.playersTotal === criteria,
+    },
+    pure_wr: {
+      "greater than": (data, criteria) => Number(data.pure_wr) > criteria,
+      "less than": (data, criteria) => Number(data.pure_wr) < criteria,
+      "equal to": (data, criteria) =>
+        Number(data.pure_wr).toString().includes(criteria),
+    },
   };
 
   const getSortingDirectionFor = (name) => {
@@ -72,17 +76,13 @@ function Maps() {
             {isLoading && maps.length === 0 && <LoadingSpinner />}
             {!isLoading && (
               <div className="filterToggles">
-                <HideEmpty
+                <BoundaryFilter
                   setFilterCriteria={setFilterCriteria}
-                  defaultValue={-Infinity}
+                  criteriaKey={"playersTotal"}
                 />
-                <MapMinPureTime
+                <BoundaryFilter
                   setFilterCriteria={setFilterCriteria}
-                  defaultValue={-Infinity}
-                />
-                <MapMaxPureTime
-                  setFilterCriteria={setFilterCriteria}
-                  defaultValue={Infinity}
+                  criteriaKey={"pure_wr"}
                 />
               </div>
             )}

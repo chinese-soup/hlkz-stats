@@ -1,22 +1,22 @@
 import React from "react";
 
-const HideEmpty = ({ setFilterCriteria, defaultValue }) => {
+const BoolFilter = ({ setFilterCriteria, defaultValue, criteriaKey }) => {
   const handleChange = (event) => {
     const newValue = event.target.checked ? 0 : defaultValue;
     setFilterCriteria((prevCriteria) => {
       return {
         ...prevCriteria,
-        playersTotal: newValue,
+        [criteriaKey]: newValue,
       };
     });
   };
 
   return (
     <div className="filter">
-      <input id="playersTotal-filter" type="checkbox" onChange={handleChange} />
-      <label htmlFor="playersTotal-filter">Hide maps without players</label>
+      <input id="boolean-filter" type="checkbox" onChange={handleChange} />
+      <label htmlFor="boolean-filter">{criteriaKey}</label>
     </div>
   );
 };
 
-export default HideEmpty;
+export default BoolFilter;
