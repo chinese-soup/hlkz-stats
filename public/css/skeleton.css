@@ -1265,6 +1265,10 @@ thead button:focus {
   flex-direction: row;
 }
 
+.centered {
+  text-align: center;
+}
+
 /* Dark mode toggle */
 .themeToggle {
   position: absolute !important;

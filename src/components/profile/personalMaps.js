@@ -91,7 +91,7 @@ const PersonalMaps = ({ steamId64, type }) => {
           </tbody>
         </table>
       )}
-      <center>
+      <div className="centered">
         <ShowMoreButton
           totalMapCount={items.length}
           isLoading={isLoading}
@@ -99,7 +99,7 @@ const PersonalMaps = ({ steamId64, type }) => {
           isLoaded={isLoaded}
           setLoaded={setLoaded}
         />
-      </center>
+      </div>
     </div>
   );
 };
