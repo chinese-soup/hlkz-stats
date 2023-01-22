@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { reverseFormatTime } from "../../utils/timeAndDate";
 
-const BoundaryFilter = ({ setFilterCriteria, criteriaKey }) => {
+const BoundaryFilter = ({
+  setFilterCriteria,
+  criteriaKey,
+  label,
+  isTimeValue = false,
+}) => {
   const [operator, setOperator] = useState("greater than");
-  const [defaultValue, setDefaultValue] = useState(-Infinity);
   const [filterValue, setFilterValue] = useState("");
-
-  useEffect(() => {
-    setDefaultValue(operator === "greater than" ? -Infinity : Infinity);
-  }, [operator]);
 
   useEffect(() => {
     updateFilterCriteria(operator, filterValue);
   }, [filterValue]);
 
   const updateFilterCriteria = (operator, filterValue) => {
+    const defaultValue = operator === "greater than" ? -Infinity : Infinity;
     setFilterCriteria((prevCriteria) => {
       return {
         ...prevCriteria,
         [criteriaKey]: {
-          value: reverseFormatTime(filterValue, defaultValue),
+          value: isTimeValue
+            ? reverseFormatTime(filterValue, defaultValue)
+            : filterValue,
           operator,
         },
       };
@@ -38,7 +41,7 @@ const BoundaryFilter = ({ setFilterCriteria, criteriaKey }) => {
         type="text"
         onChange={(e) => setFilterValue(e.target.value)}
       />
-      <label htmlFor="boundary-filter">{criteriaKey}</label>
+      <label htmlFor="boundary-filter">{label}</label>
       <select value={operator} onChange={(e) => handleChange(e.target.value)}>
         <option value="greater than">Greater than</option>
         <option value="less than">Less than</option>

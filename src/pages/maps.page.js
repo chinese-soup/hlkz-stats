@@ -27,8 +27,7 @@ function Maps() {
     pure_wr: {
       "greater than": (data, criteria) => Number(data.pure_wr) > criteria,
       "less than": (data, criteria) => Number(data.pure_wr) < criteria,
-      "equal to": (data, criteria) =>
-        Number(data.pure_wr).toString().includes(criteria),
+      "equal to": (data, criteria) => Number(data.pure_wr) === criteria,
     },
   };
 
@@ -79,10 +78,13 @@ function Maps() {
                 <BoundaryFilter
                   setFilterCriteria={setFilterCriteria}
                   criteriaKey={"playersTotal"}
+                  label={"Total players"}
                 />
                 <BoundaryFilter
                   setFilterCriteria={setFilterCriteria}
                   criteriaKey={"pure_wr"}
+                  label={"Pure WR"}
+                  isTimeValue={true}
                 />
               </div>
             )}
