@@ -20,9 +20,11 @@ const BoundaryFilter = ({
       return {
         ...prevCriteria,
         [criteriaKey]: {
-          value: isTimeValue
-            ? reverseFormatTime(filterValue, defaultValue)
-            : filterValue,
+          value: isTimeValue // if it's a time value
+            ? reverseFormatTime(filterValue, defaultValue) // convert time to seconds
+            : filterValue // otherwise use filterValue if it's present
+            ? filterValue
+            : defaultValue, // if not present, use defaultValue
           operator,
         },
       };
