@@ -79,11 +79,13 @@ function Maps() {
                   setFilterCriteria={setFilterCriteria}
                   criteriaKey={"playersTotal"}
                   label={"Total players"}
+                  icon={"fa-solid fa-users"}
                 />
                 <BoundaryFilter
                   setFilterCriteria={setFilterCriteria}
                   criteriaKey={"pure_wr"}
                   label={"Pure WR"}
+                  icon={"fa-solid fa-stopwatch"}
                   isTimeValue={true}
                 />
               </div>

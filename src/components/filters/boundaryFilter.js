@@ -5,10 +5,12 @@ const BoundaryFilter = ({
   setFilterCriteria,
   criteriaKey,
   label,
+  icon,
   isTimeValue = false,
 }) => {
   const [operator, setOperator] = useState("greater than");
   const [filterValue, setFilterValue] = useState("");
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     updateFilterCriteria(operator, filterValue);
@@ -36,19 +38,35 @@ const BoundaryFilter = ({
     updateFilterCriteria(operator, filterValue);
   };
 
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+
   return (
     <div className="filter boundary">
-      <input
-        id="boundary-filter"
-        type="text"
-        onChange={(e) => setFilterValue(e.target.value)}
-      />
-      <label htmlFor="boundary-filter">{label}</label>
-      <select value={operator} onChange={(e) => handleChange(e.target.value)}>
-        <option value="greater than">Greater than</option>
-        <option value="less than">Less than</option>
-        <option value="equal to">Equal to</option>
-      </select>
+      <div className="dropdown" onClick={handleOpen}>
+        <i className={icon}></i> {label}{" "}
+        {!open && <i className="fa-solid fa-angle-down"></i>}
+        {open && <i className="fa-solid fa-angle-up"></i>}
+      </div>
+      {open && (
+        <div>
+          <select
+            value={operator}
+            onChange={(e) => handleChange(e.target.value)}
+          >
+            <option value="greater than">Greater than</option>
+            <option value="less than">Less than</option>
+            <option value="equal to">Equal to</option>
+          </select>
+          <br />
+          <input
+            id="boundary-filter"
+            type="text"
+            onChange={(e) => setFilterValue(e.target.value)}
+          />
+        </div>
+      )}
     </div>
   );
 };
