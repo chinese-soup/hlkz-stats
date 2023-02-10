@@ -22,12 +22,13 @@ function Maps() {
     playersTotal: {
       "greater than": (data, criteria) => data.playersTotal > criteria,
       "less than": (data, criteria) => data.playersTotal < criteria,
-      "equal to": (data, criteria) => data.playersTotal === criteria,
+      "equal to": (data, criteria) => data.playersTotal.toString() === criteria,
     },
     pure_wr: {
       "greater than": (data, criteria) => Number(data.pure_wr) > criteria,
       "less than": (data, criteria) => Number(data.pure_wr) < criteria,
-      "equal to": (data, criteria) => Number(data.pure_wr) === criteria,
+      "equal to": (data, criteria) =>
+        Number(data.pure_wr).toString().includes(criteria),
     },
   };
 
@@ -84,7 +85,7 @@ function Maps() {
                 <BoundaryFilter
                   setFilterCriteria={setFilterCriteria}
                   criteriaKey={"pure_wr"}
-                  label={"Pure WR"}
+                  label={"Pure record"}
                   icon={"fa-solid fa-stopwatch"}
                   isTimeValue={true}
                 />
