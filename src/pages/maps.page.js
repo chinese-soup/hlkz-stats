@@ -54,7 +54,7 @@ function Maps() {
   useEffect(() => {
     // Listen to changes in filterCriteria, then update filtered maps
     setFilteredMaps(filterArray(maps, filterCriteria, filterFunctions));
-    console.log(filterCriteria); // debug
+    // console.log(filterCriteria); // debug
   }, [filterCriteria]);
 
   useEffect(() => {
@@ -76,16 +76,16 @@ function Maps() {
               <div className="filterToggles">
                 <BoundaryFilter
                   setFilterCriteria={setFilterCriteria}
-                  criteriaKey={"playersTotal"}
-                  label={"Total players"}
-                  icon={"fa-solid fa-users"}
-                />
-                <BoundaryFilter
-                  setFilterCriteria={setFilterCriteria}
                   criteriaKey={"pure_wr"}
                   label={"Pure record"}
                   icon={"fa-solid fa-stopwatch"}
                   isTimeValue={true}
+                />
+                <BoundaryFilter
+                  setFilterCriteria={setFilterCriteria}
+                  criteriaKey={"playersTotal"}
+                  label={"Total players"}
+                  icon={"fa-solid fa-users"}
                 />
               </div>
             )}

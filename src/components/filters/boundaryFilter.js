@@ -66,24 +66,19 @@ const BoundaryFilter = ({
         {!open && <i className="fa-solid fa-angle-down"></i>}
         {open && <i className="fa-solid fa-angle-up"></i>}
       </div>
-      {open && (
-        <div className="menu">
-          <select
-            value={operator}
-            onChange={(e) => handleChange(e.target.value)}
-          >
-            <option value="greater than">Greater than</option>
-            <option value="less than">Less than</option>
-            <option value="equal to">Equals to</option>
-          </select>
-          <input
-            id="boundary-filter"
-            type="text"
-            placeholder={label}
-            onChange={(e) => setFilterValue(e.target.value)}
-          />
-        </div>
-      )}
+      <div className={open ? "menu" : "menu hidden"}>
+        <select value={operator} onChange={(e) => handleChange(e.target.value)}>
+          <option value="greater than">Greater than</option>
+          <option value="less than">Less than</option>
+          <option value="equal to">Equals to</option>
+        </select>
+        <input
+          id="boundary-filter"
+          type="text"
+          placeholder={label}
+          onChange={(e) => setFilterValue(e.target.value)}
+        />
+      </div>
     </div>
   );
 };

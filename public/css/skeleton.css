@@ -1292,6 +1292,10 @@ thead button:focus {
   border-bottom-right-radius: 5px;
 }
 
+.filter .menu.hidden {
+  display: none;
+}
+
 .centered {
   text-align: center;
 }
