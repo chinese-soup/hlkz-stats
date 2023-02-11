@@ -42,8 +42,25 @@ const BoundaryFilter = ({
     setOpen(!open);
   };
 
+  const handleBlur = (e) => {
+    const currentTarget = e.currentTarget;
+
+    // Check the newly focused element in the next tick of the event loop
+    setTimeout(() => {
+      // Check if the new activeElement is a child of the original container
+      if (!currentTarget.contains(document.activeElement)) {
+        // Change open state to be closed
+        setOpen(false);
+      }
+    }, 0);
+  };
+
   return (
-    <div className={open ? "filter boundary active" : "filter boundary"}>
+    <div
+      className={open ? "filter boundary active" : "filter boundary"}
+      tabIndex="1"
+      onBlur={handleBlur}
+    >
       <div className="dropdown" onClick={handleOpen}>
         <i className={icon}></i> {label}{" "}
         {!open && <i className="fa-solid fa-angle-down"></i>}

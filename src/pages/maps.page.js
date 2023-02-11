@@ -17,8 +17,6 @@ function Maps() {
   const [filterCriteria, setFilterCriteria] = useState({});
 
   const filterFunctions = {
-    // TODO: Move to respective filter component (i.e. boundary filter)
-    // and access objects based on criteriaKey parameter instead of having hardcoded keys
     playersTotal: {
       "greater than": (data, criteria) => data.playersTotal > criteria,
       "less than": (data, criteria) => data.playersTotal < criteria,
