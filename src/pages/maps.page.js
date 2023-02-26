@@ -55,7 +55,6 @@ function Maps() {
   useEffect(() => {
     // Listen to changes in filterCriteria, then update filtered maps
     setFilteredMaps(filterArray(maps, filterCriteria, filterFunctions));
-    console.log(filterCriteria); // debug
   }, [filterCriteria]);
 
   useEffect(() => {
