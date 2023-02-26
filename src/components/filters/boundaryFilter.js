@@ -10,23 +10,38 @@ const BoundaryFilter = ({
 }) => {
   const [operator, setOperator] = useState("greater than");
   const [filterValue, setFilterValue] = useState("");
+  const [minValue, setMinValue] = useState("");
+  const [maxValue, setMaxValue] = useState("");
   const [open, setOpen] = useState(false);
+  const [between, setBetween] = useState(false);
 
   useEffect(() => {
-    updateFilterCriteria(operator, filterValue);
-  }, [filterValue]);
+    updateFilterCriteria(operator, filterValue, minValue, maxValue);
+  }, [filterValue, minValue, maxValue]);
 
-  const updateFilterCriteria = (operator, filterValue) => {
-    const defaultValue = operator === "greater than" ? -Infinity : Infinity;
+  const processValue = (value, defaultValue) => {
+    if (isTimeValue) {
+      // if it's a time value
+      return reverseFormatTime(value, defaultValue); // convert time to seconds
+    }
+    if (value) {
+      return value; // otherwise use value if it's present
+    } else {
+      return defaultValue; // if not present, use defaultValue
+    }
+  };
+
+  const updateFilterCriteria = (operator, filterValue, minValue, maxValue) => {
     setFilterCriteria((prevCriteria) => {
       return {
         ...prevCriteria,
         [criteriaKey]: {
-          value: isTimeValue // if it's a time value
-            ? reverseFormatTime(filterValue, defaultValue) // convert time to seconds
-            : filterValue // otherwise use filterValue if it's present
-            ? filterValue
-            : defaultValue, // if not present, use defaultValue
+          minValue: processValue(minValue, -Infinity),
+          maxValue: processValue(maxValue, Infinity),
+          value: processValue(
+            filterValue,
+            operator === "greater than" ? -Infinity : Infinity
+          ),
           operator,
         },
       };
@@ -35,6 +50,7 @@ const BoundaryFilter = ({
 
   const handleChange = (operator) => {
     setOperator(operator);
+    operator === "between" ? setBetween(true) : setBetween(false);
     updateFilterCriteria(operator, filterValue);
   };
 
@@ -70,14 +86,33 @@ const BoundaryFilter = ({
         <select value={operator} onChange={(e) => handleChange(e.target.value)}>
           <option value="greater than">Greater than</option>
           <option value="less than">Less than</option>
-          <option value="equal to">Equals to</option>
+          <option value="between">Between</option>
         </select>
-        <input
-          id="boundary-filter"
-          type="text"
-          placeholder={label}
-          onChange={(e) => setFilterValue(e.target.value)}
-        />
+        {!between ? (
+          <input
+            id="boundary-filter"
+            type="text"
+            placeholder={label}
+            onChange={(e) => setFilterValue(e.target.value)}
+          />
+        ) : (
+          <div>
+            <input
+              className="minValue"
+              id="boundary-filter"
+              type="text"
+              placeholder="Lowest value"
+              onChange={(e) => setMinValue(e.target.value)}
+            />
+            <input
+              className="maxValue"
+              id="boundary-filter"
+              type="text"
+              placeholder="Highest value"
+              onChange={(e) => setMaxValue(e.target.value)}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

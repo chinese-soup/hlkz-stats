@@ -20,13 +20,14 @@ function Maps() {
     playersTotal: {
       "greater than": (data, criteria) => data.playersTotal > criteria,
       "less than": (data, criteria) => data.playersTotal < criteria,
-      "equal to": (data, criteria) => data.playersTotal.toString() === criteria,
+      between: (data, minValue, maxValue) =>
+        data.playersTotal >= minValue && data.playersTotal <= maxValue,
     },
     pure_wr: {
       "greater than": (data, criteria) => Number(data.pure_wr) > criteria,
       "less than": (data, criteria) => Number(data.pure_wr) < criteria,
-      "equal to": (data, criteria) =>
-        Number(data.pure_wr).toString().includes(criteria),
+      between: (data, minValue, maxValue) =>
+        Number(data.pure_wr) > minValue && Number(data.pure_wr < maxValue),
     },
   };
 
@@ -54,7 +55,7 @@ function Maps() {
   useEffect(() => {
     // Listen to changes in filterCriteria, then update filtered maps
     setFilteredMaps(filterArray(maps, filterCriteria, filterFunctions));
-    // console.log(filterCriteria); // debug
+    console.log(filterCriteria); // debug
   }, [filterCriteria]);
 
   useEffect(() => {

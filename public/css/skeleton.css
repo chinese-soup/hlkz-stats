@@ -1251,7 +1251,7 @@ thead button:focus {
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid transparent !important;
   border-bottom-color: none;
-  margin-bottom: 0 !important;
+  margin-bottom: 10px; !important;
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -1283,7 +1283,7 @@ thead button:focus {
 .filter .menu {
   position: absolute;
   margin: -1px -10px;
-  padding: 10px;
+  padding: 10px 10px 0px 10px;
   width: 100%;
   background-color: #efefef;
   z-index: 10;
