@@ -1251,7 +1251,7 @@ thead button:focus {
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid transparent !important;
   border-bottom-color: none;
-  margin-bottom: 10px; !important;
+  margin-bottom: 10px !important;
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
