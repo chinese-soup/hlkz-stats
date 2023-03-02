@@ -51,11 +51,15 @@ function MapLeaderboard() {
             <div className="row">
               {records.length > 0 && (
                 <div className="twelve columns">
-                  <h3 className="leaderboard-multiplier">Leaderboards</h3>
-                  <select defaultValue="pure" onChange={handleCategoryChange}>
-                    <option value="pure">Pure</option>
-                    <option value="pro">Pro</option>
-                  </select>
+                  <div className="mapLeaderboardHeader">
+                    <h3 className="leaderboard-multiplier centered">
+                      Leaderboards
+                    </h3>
+                    <select defaultValue="pure" onChange={handleCategoryChange}>
+                      <option value="pure">Pure</option>
+                      <option value="pro">Pro</option>
+                    </select>
+                  </div>
                   {isLoading && <LoadingSpinner />}
                   {!isLoading && times.length === 0 && (
                     <div>No times found for the selected category.</div>

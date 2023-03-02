@@ -1215,6 +1215,8 @@ thead button:focus {
   color: #000;
 }
 
+/* Filters */
+
 .filter {
   text-align: left;
   color: #222;
@@ -1294,6 +1296,14 @@ thead button:focus {
 
 .filter .menu.hidden {
   display: none;
+}
+
+/* Leaderboards */
+
+.mapLeaderboardHeader {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
 }
 
 .centered {
